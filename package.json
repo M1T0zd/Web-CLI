@@ -1,0 +1,22 @@
+{
+  "name": "web-cli",
+  "version": "1.0.0",
+  "description": "Web Command-Line Interface for external applications.",
+  "main": "web-cli.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CLI",
+    "console"
+  ],
+  "author": "M1T0",
+  "license": "ISC"
+}

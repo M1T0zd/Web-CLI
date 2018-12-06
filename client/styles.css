@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+
+body {
+	margin: 0;
+	height: 100vh;
+	color: #FFF;
+	background-color: #000;
+	font-family: VT323, sans-serif;
+}
+
+#login {
+	z-index: 101;
+	background-color: #222;
+	position: absolute;
+	width: 200px;
+	margin: 0 calc(50% - 100px);
+	top: 45%;
+		transform: translateY(-50%);
+}
+
+#login h2 {
+	font-weight: normal;
+	text-align: center;
+	margin: 5px 0;
+}
+
+#login input {
+	color: #FFF;
+	background-color: #111;
+	border: none;
+	outline: none;
+	width: 100%;
+	font-size: 20px;
+	text-align: center;
+}
+
+#block {
+	z-index: 100;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+}
+
+#terminal {
+	margin: 0;
+	height: calc(100vh - 38px);
+	overflow: auto;
+}
+
+#terminal p {
+	margin: 0;
+	font-size: 25px;
+}
+
+#input {
+	color: #FFF;
+	width: 100%;
+	height: 38px;
+	background-color: #111;
+	position: absolute;
+	bottom: 0;
+}
+
+#input h1 {
+	display: inline;
+	width: 50px;
+	margin: 0 25px 0 25px;
+	vertical-align: top;
+	font-family: arial, sans-serif;
+}
+
+#input input {
+	width: calc(100% - 70px);
+	background-color: #111;
+	color: #FFF;
+	border: none;
+	outline: none;
+	padding: 0;
+	height: 100%;
+	max-height: 75px;
+	margin: 0;
+	font-size: 30px;
+	font-family: VT323, sans-serif;
+	overflow: hidden;				
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background: #141414; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #222; 
+}
