@@ -64,6 +64,9 @@ $(function(){
 	function log(log)
 	{
 		console.log(log)
+
+		log = log.replace(/\n/g, "<br>")
+		log = log.replace(/\t/g, "&emsp;")
 		$("#terminal p").append(log + "<br>"); 
 
 		$("#terminal").scrollTop($("#terminal")[0].scrollHeight);
