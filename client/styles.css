@@ -100,40 +100,42 @@ body {
 @media screen and (orientation: portrait)
 {
 	#login {
-		width: 600px;
-		margin: 0 calc(50% - 300px);
-		top: 45%;
+		width: 300px;
+		margin: 0 calc(50% - 150px);
+		top: 47%;
 	}
 	
 	#login h2 {
-		font-size: 75px;
-		margin: 15px 0;
+		font-size: 35px;
+		margin: 5px 0;
 	}
 	
 	#login input {
-		width: 100%;
-		font-size: 60px;
-		text-align: center;
+		font-size: 30px;
 	}
 
 
+	#terminal {
+		height: calc(100vh - 28px);
+	}
+
 	#terminal p {
-		font-size: 50px;
+		font-size: 20px;
 	}
 
 
 	#input {
-		height: 68px;
+		height: 28px;
 	}
 
 	#input h1 {
-		margin: 0 25px 0 25px;
-		font-size: 60px;
+		margin: 0 10px 0 10px;
+		font-size: 25px;
 	}
 
 	#input input {
-		width: calc(100% - 100px);
-		font-size: 60px;
+		width: calc(100% - 45px);
+		font-size: 25px;
 	}
 }
 
