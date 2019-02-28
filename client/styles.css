@@ -3,10 +3,7 @@
 :root {
     --main-bg-color: #000;
     --secondary-bg-color: #111;
-    --tertiary-bg-color: #222;/*
-    --main-theme-color: #F0A30A;
-    --secondary-theme-color: #AA7409;
-    --tertiary-theme-color: #6C5315;*/
+    --tertiary-bg-color: #222;
     --main-txt-color: #FFF;
     --secondary-txt-color: #BBB;
 
@@ -28,7 +25,7 @@ body {
 	width: 200px;
 	margin: 0 calc(50% - 100px);
 	top: 45%;
-		transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 
 #login h2 {
@@ -95,7 +92,49 @@ body {
 	margin: 0;
 	font-size: 30px;
 	font-family: VT323, sans-serif;
-	overflow: hidden;				
+	overflow: hidden;			
+}
+
+
+
+@media screen and (orientation: portrait)
+{
+	#login {
+		width: 600px;
+		margin: 0 calc(50% - 300px);
+		top: 45%;
+	}
+	
+	#login h2 {
+		font-size: 75px;
+		margin: 15px 0;
+	}
+	
+	#login input {
+		width: 100%;
+		font-size: 60px;
+		text-align: center;
+	}
+
+
+	#terminal p {
+		font-size: 50px;
+	}
+
+
+	#input {
+		height: 68px;
+	}
+
+	#input h1 {
+		margin: 0 25px 0 25px;
+		font-size: 60px;
+	}
+
+	#input input {
+		width: calc(100% - 100px);
+		font-size: 60px;
+	}
 }
 
 
