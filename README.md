@@ -6,7 +6,7 @@ It uses an `http` connection and presents you with a terminal-like web interface
 
 ## Getting Started
 First you will have to make a function that wil be used as the interpreter. Then you need to set it all up, which means using the `interpreter()` function and pass on that function you made as a parameter to interpret the input from the client (the Web-CLI user).
-After that is done, you're all set! However, it might be very useful to use some of the 'settings' command to really secure and customize your web-CLI connection.
+After that is done, you're all set! However, it might be very useful to use some of the 'settings' commands to really secure and customize your web-CLI connection.
 <br><br>
 
 ### Functions
