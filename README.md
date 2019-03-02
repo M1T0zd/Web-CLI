@@ -27,5 +27,5 @@ function commandHandler(command, args) //Your function needs 2 parameters: comma
 }
 ```
 
-After running your application you can connect to the server it's running on via your browser on the port `8082`. <br>
+After running your application you can connect to the server it's running on with your browser on the port `8082`. <br>
 For example `http://1.2.3.4:8082/`
