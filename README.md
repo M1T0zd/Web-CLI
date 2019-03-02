@@ -5,20 +5,23 @@ It uses an `http` connection and presents you with a terminal-like web interface
 <br><br>
 
 ## Getting Started
-First you will have to make a function that wil be used as the interpreter. Then you need to set it all up, which means using the `interpreter()` function and pass on that function you made as a parameter to interpret the input from the client (the Web-CLI user).
+First you will have to make a function that wil be used as the interpreter. Then you need to set it all up, which means using the `interpreter()` function to pass on that function you made as a parameter to interpret the input from the client (the Web-CLI user).
 After that is done, you're all set! However, it might be very useful to use some of the 'settings' commands to really secure and customize your web-CLI connection.
 <br><br>
 
 ### Functions
 
 ##### Essential
-- **interpreter(*function*);**	&emsp; Pass the the function that handles (interprets) the input as a parameter.
+- **interpreter(*function*)**	&emsp; Pass the the function that handles (interprets) the input as a parameter.
+- **start()**			&emsp; Start the Web-CLI!
 
 ##### Settings
-- **setPassword(*string*);**	&emsp; Set the password needed to login. ("admin" is the default pasword.)
+- **setPassword(*string*)**	&emsp; Set the password needed to login. (_Default: "admin"_)
+- **setPort(*int*)**		&emsp; Set the port the Web-CLI will be running on. (_Default: "80"_)
+- **setLogStatus(*bool*)**	&emsp; Set if the Web-CLI will send statuses in the console (`console.log()`). (_Default: false_)
 
 ##### Utility
-- **sendLog(*string*);**	&emsp; Send a message to the Web-CLI client.
+- **sendLog(*string*)**		&emsp; Send a message to the Web-CLI client.
 <br>
 
 #### Example
@@ -26,8 +29,11 @@ After that is done, you're all set! However, it might be very useful to use some
 webCLI = require("webCLI");
 
 webCLI.setPassword("SuperSecretPassword"); //Set the password.
+webCLI.setPort(8080); //Set the port.
 
-webCLI.interpreter(commandHandler); //'commandHandler' is my own function. (See below)
+webCLI.interpreter(commandHandler); //'commandHandler' is my own function. (See bottom)
+
+webCLI.start(); //Start!
 
 //My 'interpreter' function
 function commandHandler(command, args) //Your function needs 2 parameters: command(string) and args(string[]).
@@ -44,5 +50,5 @@ function commandHandler(command, args) //Your function needs 2 parameters: comma
 ```
 <br>
 
-After running your application you can connect to the server it's running on with your browser on port `8082`. <br>
-For example: `http://1.2.3.4:8082/`
+After running your application you can connect to the server it's running on with your browser. <br>
+For example: `http://1.2.3.4:8080/`
