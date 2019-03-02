@@ -1,7 +1,7 @@
 # Web-CLI
 This (Node.js) application allows you to easily communicate with your server and send commands using your browser via the internet.
 It's made to be used on top of your own (Node.js) application, solely for communication and control purposes with that application.
-It uses an `http` connection and gives you a terminal-like web application when you connect to the server it's running on. You can then type in your commands and send it. In your application you will first need to set all the settings, like the password, and then you'll need to make a 'command handler' function to interpret your input and process it in any way you desire. You could for example have it send you status reports back or execute certain practical functions.
+It uses an `http` connection and presents you with a terminal-like web interface when you connect to it. You can then type in your commands and send it to the server. In your application you will need to make a 'command handler' function to interpret your input and process it in any way you desire. You could for example have it send you status reports back or execute certain practical functions within your application.
 <br><br>
 
 ## Getting Started
@@ -12,13 +12,13 @@ After that is done, you're all set! However, it might be very useful to use some
 ### Functions
 
 ##### Essential
-* **interpreter(*function*);**    Pass the the function that handles (interprets) the input as a parameter.
+- **interpreter(*function*);**	&emsp; Pass the the function that handles (interprets) the input as a parameter.
 
 ##### Settings
-* **setPassword(*string*);**    Set the password needed to login. ("admin" is the default pasword.)
+- **setPassword(*string*);**	&emsp; Set the password needed to login. ("admin" is the default pasword.)
 
 ##### Utility
-* **sendLog(*string*);**        Send a message to the Web-CLI client.
+- **sendLog(*string*);**	&emsp; Send a message to the Web-CLI client.
 <br>
 
 #### Example
