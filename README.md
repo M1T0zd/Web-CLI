@@ -1,6 +1,6 @@
 # Web-CLI
-This application allows you to easily communicate with your server and send commands using your browser via the internet.
-It's made to be used on top of your own application solely for communication and control purposes with that application.
+This (Node.js) application allows you to easily communicate with your server and send commands using your browser via the internet.
+It's made to be used on top of your own (Node.js) application, solely for communication and control purposes with that application.
 It uses an `http` connection and gives you a terminal-like web application when you connect to the server it's running on. You can then type in your commands and send it. In your application you will first need to set all the settings, like the password, and then you'll need to make a 'command handler' function to interpret your input and process it in any way you desire. You could for example have it send you status reports back or execute certain practical functions.
 <br><br>
 
