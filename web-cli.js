@@ -12,16 +12,14 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-var port = 8082;
-
-app.use(express.static(__dirname + '/client'));
-server.listen(port);
 
 
-var password = "admin"
+
+
+
+
 
 var connectedSocket = null;
-
 io.on('connection', function(socket) {
 	if(!connectedSocket)
 	{	
@@ -78,21 +76,62 @@ io.on('connection', function(socket) {
 	}
 });
 
-
 var interpret = function(){}
+
+//System variables
+var running = false;
+var interpreterIsSet = false;
+
+//Setting variables
+var password = "admin"
+var port = 80;
+
+var logStatus = false;
+
 
 //CLIENT SCRIPT FUNCTIONS
 module.exports = {
 	interpreter: function(interpreter) {
-		interpret = interpreter;
+		if(!running){
+			interpret = interpreter;
+			interpreterIsSet = true;
+		} else {
+			throw "You can't set the interpreter after starting the Web-CLI.";
+		}
 	},
+
 	setPassword: function(_password) {
 		password = _password;
 	},
+	setPort: function(_port)
+	{
+		if(!running){
+			port = _port;
+		} else {
+			throw "You can't change the port after starting the Web-CLI.";
+		}
+	},
+	setLogStatus: function(set)
+	{
+		logStatus = true;
+	},
+
 	sendLog: function(data) {
 		if(connectedSocket)
 		{
 			connectedSocket.emit("log", data)
+		}
+	},
+
+	start: function()
+	{
+		if(interpreterIsSet){
+			app.use(express.static(__dirname + '/client'));
+			server.listen(port);
+
+			running = true;
+		} else {
+			throw "You must set the 'interpreter' function first.\nUse 'interpreter()' to pass a function to be used as the interpreter";
 		}
 	}
 };
@@ -103,10 +142,16 @@ module.exports = {
 //Internal functions
 function print(msg)
 {
-	let d = new Date();
+	if(logStatus)
+	{
+		//let d = new Date();
 
-    console.log(d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '| ' + msg);
+		//console.log(d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '| ' + msg);
+		console.log(msg);
+	}
 }
+
+
 
 //console.log('Booting complete');
 //console.log(`Running the server on port ${port}...`);
