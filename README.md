@@ -6,14 +6,14 @@ It uses an `http` connection and presents you with a terminal-like web interface
 
 ## Getting Started
 First you will have to make a function that wil be used as the interpreter. Then you need to set it all up, which means using the `interpreter()` function to pass on that function you made as a parameter to interpret the input from the client (the Web-CLI user).
-After that is done, you're all set! However, it might be very useful to use some of the 'settings' commands to really secure and customize your web-CLI connection.
+After that is done, you're all set! However, it might be very useful to use some of the 'settings' commands to really secure and customize your web-CLI connection. At the very end (after everything is fully set) you should start the Web-CLI with the `start()` function.
 <br><br>
 
 ### Functions
 
 ##### Essential
 - **interpreter(*function*)**	&emsp; Pass the the function that handles (interprets) the input as a parameter.
-- **start()**			&emsp; Start the Web-CLI!
+- **start()**			&emsp; Start the Web-CLI! Use at the very end only. (After everything is set)
 
 ##### Settings
 - **setPassword(*string*)**	&emsp; Set the password needed to login. (_Default: "admin"_)
@@ -33,7 +33,7 @@ webCLI.setPort(8080); //Set the port.
 
 webCLI.interpreter(commandHandler); //'commandHandler' is my own function. (See bottom)
 
-webCLI.start(); //Start!
+webCLI.start(); //Start! (Do at the very end!)
 
 //My 'interpreter' function
 function commandHandler(command, args) //Your function needs 2 parameters: command(string) and args(string[]).
