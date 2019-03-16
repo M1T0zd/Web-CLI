@@ -26,7 +26,7 @@ After that is done, you're all set! However, it might be very useful to use some
 
 #### Example
 ```js
-webCLI = require("webCLI");
+webCLI = require("zd-webcli");
 
 webCLI.setPassword("SuperSecretPassword"); //Set the password.
 webCLI.setPort(8080); //Set the port.
