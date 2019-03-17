@@ -59,19 +59,27 @@ $(function(){
 		log("Authorized");
 	});
 
-	socket.on('log', log) 
-		
+	socket.on("log", log);
+	
 	function log(log)
 	{
 		console.log(log)
 
-		log = log.replace(/\n/g, "<br>")
-		log = log.replace(/\t/g, "&emsp;")
-		$("#terminal p").append(log + "<br>"); 
+		log = parse(log);
+
+		$("#terminal p").append(log + "<br>");
 
 		$("#terminal").scrollTop($("#terminal")[0].scrollHeight);
 	}
 });
+
+function parse(text)
+{
+	text = text.replace(/\n/g, "<br>");
+	text = text.replace(/\t/g, "&emsp;");
+
+	return text
+}
 
 var historySelector = -1;
 var commandHistory = new Array();

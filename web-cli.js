@@ -14,11 +14,6 @@ const io = socketio(server);
 
 
 
-
-
-
-
-
 var connectedSocket = null;
 io.on('connection', function(socket) {
 	if(!connectedSocket)
@@ -91,47 +86,51 @@ var logStatus = false;
 
 //CLIENT SCRIPT FUNCTIONS
 module.exports = {
+	//Essential
 	interpreter: function(interpreter) {
-		if(!running){
-			interpret = interpreter;
-			interpreterIsSet = true;
-		} else {
-			throw "You can't set the interpreter after starting the Web-CLI.";
-		}
+		if(running) {throw new Error("You can't set the interpreter after starting the Web-CLI.")}
+		else if((typeof interpreter) !== "function") {throw new Error("Parameter must be of type: 'function'")}
+
+		interpret = interpreter;
+		interpreterIsSet = true;
+	},
+	start: function()
+	{
+		if(!interpreterIsSet) {throw new Error("You must set the 'interpreter' function first.\nUse 'interpreter()' to pass a function to be used as the interpreter")}
+
+		app.use(express.static(__dirname + '/client'));
+		server.listen(port);
+
+		running = true;
+
+		print(`Web-CLI running on port '${port}'.`);
 	},
 
+	//Settings
 	setPassword: function(_password) {
+		if(running) {throw new Error("You can't change the port after starting the Web-CLI.")}
+		else if((typeof _password) !== "string") {throw new Error("Parameter must be of type: 'string'")}
+
 		password = _password;
 	},
 	setPort: function(_port)
 	{
-		if(!running){
-			port = _port;
-		} else {
-			throw "You can't change the port after starting the Web-CLI.";
-		}
+		if(running) {throw new Error("You can't change the port after starting the Web-CLI.")}
+
+		port = _port;
 	},
 	setLogStatus: function(set)
 	{
+		if((typeof set) !== "boolean") {throw new Error("Parameter must be of type: 'boolean'")}
+
 		logStatus = true;
 	},
 
+	//Utility
 	sendLog: function(data) {
 		if(connectedSocket)
 		{
 			connectedSocket.emit("log", data)
-		}
-	},
-
-	start: function()
-	{
-		if(interpreterIsSet){
-			app.use(express.static(__dirname + '/client'));
-			server.listen(port);
-
-			running = true;
-		} else {
-			throw "You must set the 'interpreter' function first.\nUse 'interpreter()' to pass a function to be used as the interpreter";
 		}
 	}
 };
