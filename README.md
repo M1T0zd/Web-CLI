@@ -1,4 +1,10 @@
-# Web-CLI
+# zd-webcli
+[![NPM](https://nodei.co/npm/zd-webcli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/zd-webcli/) 
+<br>
+![dependencies](https://david-dm.org/M1T0zd/Web-CLI.svg)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![HitCount](http://hits.dwyl.io/M1T0zd/Web-CLI.svg)](http://hits.dwyl.io/M1T0zd/Web-CLI)
+<br><br>
 This (Node.js) application allows you to easily communicate with your server and send commands using your browser via the internet.
 It's made to be used on top of your own (Node.js) application, solely for communication and control purposes with that application.
 It uses an `http` connection and presents you with a terminal-like web interface when you connect to it. You can then type in your commands and send it to the server. In your application you will need to make a 'command handler' function to interpret your input and process it in any way you desire. You could for example have it send you status reports back or execute certain practical functions within your application.
@@ -6,7 +12,7 @@ It uses an `http` connection and presents you with a terminal-like web interface
 
 ## Getting Started
 First you will have to make a function that wil be used as the interpreter. Then you need to set it all up, which means using the `interpreter()` function to pass on that function you made as a parameter to interpret the input from the client (the Web-CLI user).
-After that is done, you're all set! However, it might be very useful to use some of the 'settings' commands to really secure and customize your web-CLI connection. At the very end (after everything is fully set) you should start the Web-CLI with the `start()` function.
+After that is done, you're all set! However, it might be very useful to use some of the '[settings](#settings)' commands to really secure and customize your web-CLI connection. At the very end (after everything is fully set) you should start the Web-CLI with the `start()` function.
 <br><br>
 
 ### Functions
