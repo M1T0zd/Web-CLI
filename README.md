@@ -61,15 +61,15 @@ For example: `http://1.2.3.4:8080/`
 
 ## The Interface
 The interface can be used on **mobiles**, **tablets**, or **PCs**, with the use of interactive web design. <br>
-<img align="left" src="https://user-images.githubusercontent.com/34724179/54859179-6de13c00-4d0a-11e9-973e-e485582c05f3.png" width="20%"/>
-<img align="center" src="https://user-images.githubusercontent.com/34724179/54859170-66219780-4d0a-11e9-88fd-12b7881bd0e2.png" width="35%"/>
-<img align="right" src="https://user-images.githubusercontent.com/34724179/54859166-5bff9900-4d0a-11e9-8077-384ab45734ee.png" width="40%"/>
+<img align="left" src="https://user-images.githubusercontent.com/34724179/54859179-6de13c00-4d0a-11e9-973e-e485582c05f3.png" width="18%"/>
+<img align="center" src="https://user-images.githubusercontent.com/34724179/54859170-66219780-4d0a-11e9-88fd-12b7881bd0e2.png" width="32%"/>
+<img align="right" src="https://user-images.githubusercontent.com/34724179/54859166-5bff9900-4d0a-11e9-8077-384ab45734ee.png" width="38%"/>
 <br><br><br><br><br>
 
 ### Login
 The login screen is simple. <br>
 <img align="left" src="https://user-images.githubusercontent.com/34724179/54858742-0c6b9e00-4d07-11e9-8637-f59897c9611f.png" width="47%"/>
-<img align="left" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="47%"/>
+<img align="right" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="47%"/>
 <br><br><br><br><br><br><br><br><br>
 
 ### Communication
