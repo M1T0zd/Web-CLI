@@ -61,16 +61,13 @@ For example: `http://1.2.3.4:8080/`
 
 ## The Interface
 The interface can be used on **mobiles**, **tablets**, or **PCs**, with the use of interactive web design. <br>
-<img align="left" src="https://user-images.githubusercontent.com/34724179/54859179-6de13c00-4d0a-11e9-973e-e485582c05f3.png" width="18%"/>
-<img align="center" src="https://user-images.githubusercontent.com/34724179/54859170-66219780-4d0a-11e9-88fd-12b7881bd0e2.png" width="32%"/>
-<img align="right" src="https://user-images.githubusercontent.com/34724179/54859166-5bff9900-4d0a-11e9-8077-384ab45734ee.png" width="38%"/>
-<br><br><br><br><br>
+![Interactive interfaces](https://user-images.githubusercontent.com/34724179/54859890-ca485980-4d12-11e9-8bf8-cea0cb0b94b4.png)
+<br>
 
 ### Login
 The login screen is simple. <br>
-<img align="left" src="https://user-images.githubusercontent.com/34724179/54858742-0c6b9e00-4d07-11e9-8637-f59897c9611f.png" width="44%"/>
-<img align="right" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="44%"/>
-<br><br><br><br><br><br><br><br><br>
+![Login](https://user-images.githubusercontent.com/34724179/54859903-ef3ccc80-4d12-11e9-8bed-c668747aaf4a.png)
+<br>
 
 ### Communication
 In the input you can send commands and arguments that you have made yourself. <br>
