@@ -69,14 +69,14 @@ The interface can be used on **mobiles**, **tablets**, or **PCs**, with the use 
 ### Login
 The login screen is simple. <br>
 <img align="left" src="https://user-images.githubusercontent.com/34724179/54858742-0c6b9e00-4d07-11e9-8637-f59897c9611f.png" width="45%"/>
-<img align="left" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="45%"/>
+<img align="right" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="45%"/>
 <br><br><br><br><br><br><br><br><br>
 
 ### Communication
 In the input you can send commands and arguments that you have made yourself. <br>
 <img src="https://user-images.githubusercontent.com/34724179/54859543-d7fbe000-4d0e-11e9-8973-e4b34274390b.png" width="50%"/>
 <br>
-From the server you can send responds back in any way you desire. <br>
+From the server you can send responses back in any way you desire. <br>
 <img src="https://user-images.githubusercontent.com/34724179/54859471-c9f98f80-4d0d-11e9-954e-7ed528356e60.png" width="50%"/>
 
 <br>
