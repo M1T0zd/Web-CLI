@@ -68,8 +68,8 @@ The interface can be used on **mobiles**, **tablets**, or **PCs**, with the use 
 
 ### Login
 The login screen is simple. <br>
-<img align="left" src="https://user-images.githubusercontent.com/34724179/54858742-0c6b9e00-4d07-11e9-8637-f59897c9611f.png" width="47%"/>
-<img align="right" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="47%"/>
+<img align="left" src="https://user-images.githubusercontent.com/34724179/54858742-0c6b9e00-4d07-11e9-8637-f59897c9611f.png" width="45%"/>
+<img align="left" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="45%"/>
 <br><br><br><br><br><br><br><br><br>
 
 ### Communication
