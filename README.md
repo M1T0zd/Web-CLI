@@ -30,7 +30,7 @@ After that is done, you're all set! However, it might be very useful to use some
 - **sendLog(*string*)**		&emsp; Send a message to the Web-CLI client.
 <br>
 
-#### Example
+### Example
 ```js
 webCLI = require("zd-webcli");
 
@@ -58,3 +58,30 @@ function commandHandler(command, args) //Your function needs 2 parameters: comma
 
 After running your application you can connect to the server it's running on with your browser. <br>
 For example: `http://1.2.3.4:8080/`
+
+## The Interface
+The interface can be used on **mobiles**, **tablets**, or **PCs**, with the use of interactive web design. <br>
+<img align="left" src="https://user-images.githubusercontent.com/34724179/54859179-6de13c00-4d0a-11e9-973e-e485582c05f3.png" width="20%"/>
+<img align="center" src="https://user-images.githubusercontent.com/34724179/54859170-66219780-4d0a-11e9-88fd-12b7881bd0e2.png" width="35%"/>
+<img align="right" src="https://user-images.githubusercontent.com/34724179/54859166-5bff9900-4d0a-11e9-8077-384ab45734ee.png" width="40%"/>
+<br><br><br><br><br>
+
+### Login
+The login screen is simple. <br>
+<img align="left" src="https://user-images.githubusercontent.com/34724179/54858742-0c6b9e00-4d07-11e9-8637-f59897c9611f.png" width="47%"/>
+<img align="left" src="https://user-images.githubusercontent.com/34724179/54858840-94ea3e80-4d07-11e9-8abf-3dba3a39276b.png" width="47%"/>
+<br><br><br><br><br><br><br><br><br>
+
+### Communication
+In the input you can send commands and arguments that you have made yourself. <br>
+<img src="https://user-images.githubusercontent.com/34724179/54859543-d7fbe000-4d0e-11e9-8973-e4b34274390b.png" width="50%"/>
+<br>
+From the server you can send responds back in any way you desire. <br>
+<img src="https://user-images.githubusercontent.com/34724179/54859471-c9f98f80-4d0d-11e9-954e-7ed528356e60.png" width="50%"/>
+
+<br>
+
+## Useful Info
+- `\n` and `\t` can be sent to the client using the `sendLog()` function. Those will be converted into `<br>` and `&emsp;`.
+- `clear` is a built in command in the interface. As it implies: it clears the terminal.
+- The interface has a command history that can be scrolled through by using the up and down arrow keys in the input. 
