@@ -75,7 +75,7 @@ The login screen is simple. <br>
 ### Communication
 In the input you can send commands and arguments that you have made yourself. <br>
 <img src="https://user-images.githubusercontent.com/34724179/54859543-d7fbe000-4d0e-11e9-8973-e4b34274390b.png" width="50%"/>
-<br>
+<br><br>
 From the server you can send responses back in any way you desire. <br>
 <img src="https://user-images.githubusercontent.com/34724179/54859471-c9f98f80-4d0d-11e9-954e-7ed528356e60.png" width="50%"/>
 
