@@ -62,12 +62,12 @@ For example: `http://1.2.3.4:8080/`
 ## The Interface
 The interface can be used on **mobiles**, **tablets**, or **PCs**, with the use of interactive web design. <br>
 ![Interactive interfaces](https://user-images.githubusercontent.com/34724179/54859890-ca485980-4d12-11e9-8bf8-cea0cb0b94b4.png)
-<br>
+<br><br>
 
 ### Login
 The login screen is simple. <br>
 ![Login](https://user-images.githubusercontent.com/34724179/54859903-ef3ccc80-4d12-11e9-8bed-c668747aaf4a.png)
-<br>
+<br><br>
 
 ### Communication
 In the input you can send commands and arguments that you have made yourself. <br>
