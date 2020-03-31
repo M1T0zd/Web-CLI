@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=VT323');
 
 :root {
-    --main-bg-color: #000;
-    --secondary-bg-color: #111;
-    --tertiary-bg-color: #222;
-    --main-txt-color: #FFF;
-    --secondary-txt-color: #BBB;
+    --main-bg-color: #1D1F21;
+    --secondary-bg-color: #333;
+    --tertiary-bg-color: #161616;
+    --main-txt-color: #C5C8C6;
+    --secondary-txt-color: #657b83;
 
     -webkit-text-size-adjust: none;
 }
@@ -92,7 +92,7 @@ body {
 	margin: 0;
 	font-size: 30px;
 	font-family: VT323, sans-serif;
-	overflow: hidden;			
+	overflow: hidden;
 }
 
 
@@ -104,12 +104,12 @@ body {
 		margin: 0 calc(50% - 150px);
 		top: 47%;
 	}
-	
+
 	#login h2 {
 		font-size: 35px;
 		margin: 5px 0;
 	}
-	
+
 	#login input {
 		font-size: 30px;
 	}
@@ -146,13 +146,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #141414; 
+    background: #141414;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333; 
+    background: #333;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #222; 
+    background: #222;
 }

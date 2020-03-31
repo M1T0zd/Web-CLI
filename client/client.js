@@ -21,7 +21,7 @@ $(function(){
 			if(data === "clear") $("#terminal p").html("");
 			else if(data) socket.emit("data", data);
 
-			
+
 			if(data && data !== commandHistory[0])
 			{
 				commandHistory.unshift(data);
@@ -60,7 +60,7 @@ $(function(){
 	});
 
 	socket.on("log", log);
-	
+
 	function log(log)
 	{
 		console.log(log)
@@ -75,9 +75,9 @@ $(function(){
 
 function parse(text)
 {
+  text = text.replace(/^ +/mg, (s) => (s.replace(/ /g, '&nbsp;')) );
 	text = text.replace(/\n/g, "<br>");
 	text = text.replace(/\t/g, "&emsp;");
-	text = text.replace(/^\s+/, (s) => (s.replace(/\s/g, '&nbsp;')) );
 
 	return text
 }
