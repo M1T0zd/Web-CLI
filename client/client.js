@@ -77,6 +77,7 @@ function parse(text)
 {
 	text = text.replace(/\n/g, "<br>");
 	text = text.replace(/\t/g, "&emsp;");
+	text = text.replace(/^\s+/, (s) => (s.replace(/\s/g, '&nbsp;')) );
 
 	return text
 }
