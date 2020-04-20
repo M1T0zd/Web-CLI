@@ -65,22 +65,11 @@ $(function(){
 	{
 		console.log(log)
 
-		log = parse(log);
-
-		$("#terminal p").append(log + "<br>");
+		$("#terminal pre").append(log + "<br>");
 
 		$("#terminal").scrollTop($("#terminal")[0].scrollHeight);
 	}
 });
-
-function parse(text)
-{
-  text = text.replace(/^ +/mg, (s) => (s.replace(/ /g, '&nbsp;')) );
-	text = text.replace(/\n/g, "<br>");
-	text = text.replace(/\t/g, "&emsp;");
-
-	return text
-}
 
 var historySelector = -1;
 var commandHistory = new Array();

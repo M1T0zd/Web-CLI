@@ -58,7 +58,7 @@ body {
 	overflow: auto;
 }
 
-#terminal p {
+#terminal pre {
 	margin: 0;
 	font-size: 25px;
 }
