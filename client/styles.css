@@ -61,6 +61,7 @@ body {
 #terminal pre {
 	margin: 0;
 	font-size: 25px;
+	font-family: VT323;
   white-space: pre-wrap;       /* css-3 */
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
   white-space: -pre-wrap;      /* Opera 4-6 */
@@ -124,7 +125,7 @@ body {
 		height: calc(100vh - 28px);
 	}
 
-	#terminal p {
+	#terminal pre {
 		font-size: 20px;
 	}
 
