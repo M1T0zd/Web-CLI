@@ -81,4 +81,4 @@ From the server you can send responses back in any way you desire. <br>
 ## Useful Info
 - Control characters such as `\n` and `\t` can be sent to the client no problem using the `sendLog()` function.
 - `clear` is a built in command in the interface. As it implies: it clears the terminal.
-- The interface has a command history that can be scrolled through by using the up and down arrow keys in the input. 
+- The interface has a command history that can be scrolled through by using the up and down arrow keys in the input.

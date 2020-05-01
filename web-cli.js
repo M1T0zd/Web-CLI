@@ -78,7 +78,7 @@ var running = false;
 var interpreterIsSet = false;
 
 //Setting variables
-var password = "admin"
+var password = "admin";
 var port = 80;
 
 var logStatus = false;
@@ -130,7 +130,7 @@ module.exports = {
 	sendLog: function(data) {
 		if(connectedSocket)
 		{
-			connectedSocket.emit("log", data)
+			connectedSocket.emit("log", data);
 		}
 	}
 };
