@@ -10,9 +10,9 @@ It's made to be used on top of your own (Node.js) application, solely for commun
 It uses an `http` connection and presents you with a terminal-like web interface when you connect to it. You can then type in your commands and send it to the server. In your application you will need to make a 'command handler' function to interpret your input and process it in any way you desire. You could for example have it send you status reports back or execute certain practical functions within your application.
 <br><br>
 
-## Getting Started
-First you will have to make a function that wil be used as the interpreter. Then you need to set it all up, which means using the `interpreter()` function to pass on that function you made as a parameter to interpret the input from the client (the Web-CLI user).
-After that is done, you're all set! However, it might be very useful to use some of the '[settings](#settings)' commands to really secure and customize your web-CLI connection. At the very end (after everything is fully set) you should start the Web-CLI with the `start()` function.
+## Usage
+First you will have to make a function that wil be used as the interpreter. Then you need to set it all up, which means using the `interpreter()` function to pass on that function you made as a parameter to interpret the input from the client (the Web-CLI user). Also setting a unique password and port (see [settings](#settings)) might be preferable to really secure and customize your web-CLI connection.
+After that is done, you're all set and ready to start! Use the `start()` function to start up the Web-CLI (do this after everything is fully set).
 <br><br>
 
 ### Functions
@@ -60,13 +60,13 @@ After running your application you can connect to the server it's running on wit
 For example: `http://1.2.3.4:8080/`
 
 ## The Interface
-The interface can be used on **mobiles**, **tablets**, or **PCs**, with the use of interactive web design. <br>
-![Interactive interfaces](https://user-images.githubusercontent.com/34724179/54859890-ca485980-4d12-11e9-8bf8-cea0cb0b94b4.png)
+The interface can be used on a **mobile**, **tablet**, or **PC**, with the use of interactive web design. <br>
+![Interactive interfaces](https://user-images.githubusercontent.com/34724179/80845634-177f4600-8c0a-11ea-9658-65df7400632d.png)
 <br><br>
 
 ### Login
 The login screen is simple. <br>
-![Login](https://user-images.githubusercontent.com/34724179/54859903-ef3ccc80-4d12-11e9-8bed-c668747aaf4a.png)
+![Login](https://user-images.githubusercontent.com/34724179/80845664-38e03200-8c0a-11ea-881c-51ed25a04b51.png)
 <br><br>
 
 ### Communication
