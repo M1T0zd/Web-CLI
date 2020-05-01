@@ -79,6 +79,6 @@ From the server you can send responses back in any way you desire. <br>
 <br>
 
 ## Useful Info
-- `\n` and `\t` can be sent to the client using the `sendLog()` function. Those will be converted into `<br>` and `&emsp;`.
+- Control characters such as `\n` and `\t` can be sent to the client using the `sendLog()` function, no problem.
 - `clear` is a built in command in the interface. As it implies: it clears the terminal.
 - The interface has a command history that can be scrolled through by using the up and down arrow keys in the input. 
