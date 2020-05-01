@@ -12,7 +12,9 @@
     "nodemon": "^1.19.4"
   },
   "scripts": {
-    "test": "jshint web-cli.js"
+    "start": "nodemon test/test.js",
+    "test": "nodemon test/test.js",
+    "jshint": "jshint web-cli.js"
   },
   "repository": {
     "type": "git",
