@@ -58,9 +58,15 @@ body {
 	overflow: auto;
 }
 
-#terminal p {
+#terminal pre {
 	margin: 0;
 	font-size: 25px;
+	font-family: VT323;
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 #input {
@@ -92,7 +98,7 @@ body {
 	margin: 0;
 	font-size: 30px;
 	font-family: VT323, sans-serif;
-	overflow: hidden;			
+	overflow: hidden;
 }
 
 
@@ -104,12 +110,12 @@ body {
 		margin: 0 calc(50% - 150px);
 		top: 47%;
 	}
-	
+
 	#login h2 {
 		font-size: 35px;
 		margin: 5px 0;
 	}
-	
+
 	#login input {
 		font-size: 30px;
 	}
@@ -119,7 +125,7 @@ body {
 		height: calc(100vh - 28px);
 	}
 
-	#terminal p {
+	#terminal pre {
 		font-size: 20px;
 	}
 
@@ -146,13 +152,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #141414; 
+    background: #141414;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333; 
+    background: #333;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #222; 
+    background: #222;
 }

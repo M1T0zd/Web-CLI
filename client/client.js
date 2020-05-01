@@ -21,7 +21,7 @@ $(function(){
 			if(data === "clear") $("#terminal p").html("");
 			else if(data) socket.emit("data", data);
 
-			
+
 			if(data && data !== commandHistory[0])
 			{
 				commandHistory.unshift(data);
@@ -60,26 +60,16 @@ $(function(){
 	});
 
 	socket.on("log", log);
-	
+
 	function log(log)
 	{
 		console.log(log)
 
-		log = parse(log);
-
-		$("#terminal p").append(log + "<br>");
+		$("#terminal pre").append(log + "<br>");
 
 		$("#terminal").scrollTop($("#terminal")[0].scrollHeight);
 	}
 });
-
-function parse(text)
-{
-	text = text.replace(/\n/g, "<br>");
-	text = text.replace(/\t/g, "&emsp;");
-
-	return text
-}
 
 var historySelector = -1;
 var commandHistory = new Array();
