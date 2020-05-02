@@ -6,6 +6,8 @@ webCLI.setLogStatus(true);
 
 webCLI.interpreter(commandHandler);
 
+webCLI.onConnect(onConnect);
+
 webCLI.start();
 
 function commandHandler(command, args)
@@ -30,4 +32,8 @@ function commandHandler(command, args)
 	{
 		webCLI.sendLog("Invalid command. Try `help`.");
 	}
+}
+
+function onConnect(){
+	webCLI.sendLog("\thello\n\tbud");
 }

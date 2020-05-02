@@ -47,6 +47,7 @@ io.on('connection', function(socket) {
 			connectedSocket = socket;
 			print(`Web-CLI user has logged in. ID: ${socket.id}`);
 			socket.emit("authorized");
+			onConnect();
 		}
 		else if(attempts >= allowedAttempts)
 		{
@@ -71,7 +72,11 @@ io.on('connection', function(socket) {
 	}
 });
 
-var interpret = function(){}
+//Essentials
+var interpret = function(){};
+
+//Events
+var onConnect = function(){};
 
 //System variables
 var running = false;
@@ -132,6 +137,14 @@ module.exports = {
 		{
 			connectedSocket.emit("log", data);
 		}
+	},
+
+	//Events
+	onConnect: function(callback) {
+		if(running) {throw new Error("You can't set an event after starting the Web-CLI.")}
+		else if((typeof callback) !== "function") {throw new Error("Parameter must be of type: 'function'")}
+
+		onConnect = callback;
 	}
 };
 
@@ -143,10 +156,9 @@ function print(msg)
 {
 	if(logStatus)
 	{
-		//let d = new Date();
+		let d = new Date();
 
-		//console.log(d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '| ' + msg);
-		console.log(msg);
+		console.log(('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ':' + ('0'+d.getSeconds()).slice(-2) + '| ' + msg);
 	}
 }
 

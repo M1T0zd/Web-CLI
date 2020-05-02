@@ -5,7 +5,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 [![HitCount](http://hits.dwyl.io/M1T0zd/Web-CLI.svg)](http://hits.dwyl.io/M1T0zd/Web-CLI)
 <br><br>
-This (Node.js) application allows you to easily communicate with your server and send commands via the web.
+This extremely light-weight and simple (Node.js) application allows you to easily communicate with your server and send commands via the web.
 It's made to be used on top of your own (Node.js) application, solely for communication and control purposes with that application.
 It uses an `http` connection and presents you with a terminal-like web interface when you connect to it. You can then type in your commands and send it to the server. In your application you will need to make a 'command handler' function to interpret your input and process it in any way you desire. You could for example have it send you status reports back or execute certain practical functions within your application.
 <br><br>
