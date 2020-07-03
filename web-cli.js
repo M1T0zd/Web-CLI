@@ -18,13 +18,15 @@ var connectedSocket = null;
 io.on('connection', function(socket) {
 	if(!connectedSocket)
 	{	
-		print(`Someone is connected via Web-CLI. ID: ${socket.id}`);
+		print(`Someone is connected via Web-CLI. ID: ${socket.id} (IP: ${socket.handshake.address})`);
 		socket.emit('log', 'Connection Established');
 
 		socket.on("login", onLogin)
 		socket.on("data", onData)
+		socket.on("logout", onLogout)
 
-		socket.on('disconnect', function(){authorized = false; connectedSocket = null; print(`Web-CLI user left. ID: ${socket.id}\n`);});
+
+		socket.on('disconnect', function(){authorized = false; connectedSocket = null; print(`Web-CLI user has disconnected. ID: ${socket.id}\n`);});
 	}
 	else
 	{
@@ -69,6 +71,15 @@ io.on('connection', function(socket) {
 
 			interpret(command, args);
 		}	
+	}
+
+	function onLogout(data) {
+		if(authorized) {
+			authorized = false;
+			connectedSocket = null
+			socket.emit("log", "Logged Out");
+			print(`Web-CLI user has logged out. ID: ${socket.id}`);
+		}
 	}
 });
 

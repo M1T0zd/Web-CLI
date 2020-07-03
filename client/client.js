@@ -18,7 +18,12 @@ $(function(){
 			$("#input input").val("");
 			log("> " + data);
 
-			if(data === "clear") $("#terminal p").html("");
+			if(data === "clear") $("#terminal pre").html("");
+			else if(data === "exit" || data === "logout") {
+				socket.emit("logout");
+				$("#login").show();
+				$("#block").show();
+			}
 			else if(data) socket.emit("data", data);
 
 
