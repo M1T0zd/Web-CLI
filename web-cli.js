@@ -21,9 +21,9 @@ io.on('connection', function(socket) {
 		print(`Someone is connected via Web-CLI. ID: ${socket.id} (IP: ${socket.handshake.address})`);
 		socket.emit('log', 'Connection Established');
 
-		socket.on("login", onLogin)
-		socket.on("data", onData)
-		socket.on("logout", onLogout)
+		socket.on("login", onLogin);
+		socket.on("data", onData);
+		socket.on("logout", onLogout);
 
 
 		socket.on('disconnect', function(){authorized = false; connectedSocket = null; print(`Web-CLI user has disconnected. ID: ${socket.id}\n`);});
@@ -36,7 +36,7 @@ io.on('connection', function(socket) {
 	
 	var authorized = false;
 	var blocked = false;
-	const allowedAttempts = 3;
+	
 	var attempts = 0;
 	function onLogin(data) {
 		if(blocked)
@@ -49,13 +49,13 @@ io.on('connection', function(socket) {
 			connectedSocket = socket;
 			print(`Web-CLI user has logged in. ID: ${socket.id}`);
 			socket.emit("authorized");
-			onConnect();
+			onLogin();
 		}
 		else if(attempts >= allowedAttempts)
 		{
 			blocked = true;
 			attempts = 0;
-			setTimeout(async function(){blocked = false;}, 180000)
+			setTimeout(async function(){blocked = false;}, 180000);
 		}
 		else
 		{
@@ -87,7 +87,7 @@ io.on('connection', function(socket) {
 var interpret = function(){};
 
 //Events
-var onConnect = function(){};
+var onLogin = function(){};
 
 //System variables
 var running = false;
@@ -97,10 +97,11 @@ var interpreterIsSet = false;
 var password = "admin";
 var port = 80;
 
+var allowedAttempts = 3;
 var logStatus = false;
 
 
-//CLIENT SCRIPT FUNCTIONS
+//API FUNCTIONS
 module.exports = {
 	//Essential
 	interpreter: function(interpreter) {
@@ -124,38 +125,44 @@ module.exports = {
 
 	//Settings
 	setPassword: function(_password) {
-		if(running) {throw new Error("You can't change the port after starting the Web-CLI.")}
+		if(running) {throw new Error("You can't change the password after starting the Web-CLI.")}
 		else if((typeof _password) !== "string") {throw new Error("Parameter must be of type: 'string'")}
 
 		password = _password;
 	},
-	setPort: function(_port)
-	{
+	setPort: function(_port) {
 		if(running) {throw new Error("You can't change the port after starting the Web-CLI.")}
+		else if(!Number.isInteger(Number(_port))) {throw new Error("Parameter must be an integer.")}
 
 		port = _port;
 	},
+	allowedAttempts: function(_allowedAttempts) {
+		if(running) {throw new Error("You can't change the allowed attempts after starting the Web-CLI.")}
+		else if((typeof _allowedAttempts) !== "number" || Number.isInteger(_allowedAttempts)) {throw new Error("Parameter must be of type: 'number' and be an integer.")}
+		
+		allowedAttempts = _allowedAttempts;
+	},
 	setLogStatus: function(set)
 	{
-		if((typeof set) !== "boolean") {throw new Error("Parameter must be of type: 'boolean'")}
+		if(running) {throw new Error("You can't change the log setting after starting the Web-CLI.")}
+		else if((typeof set) !== "boolean") {throw new Error("Parameter must be of type: 'boolean'")}
 
-		logStatus = true;
+		logStatus = set;
 	},
 
 	//Utility
 	sendLog: function(data) {
-		if(connectedSocket)
-		{
+		if(connectedSocket) {
 			connectedSocket.emit("log", data);
 		}
 	},
 
 	//Events
-	onConnect: function(callback) {
+	onLogin: function(callback) {
 		if(running) {throw new Error("You can't set an event after starting the Web-CLI.")}
 		else if((typeof callback) !== "function") {throw new Error("Parameter must be of type: 'function'")}
 
-		onConnect = callback;
+		onLogin = callback;
 	}
 };
 
