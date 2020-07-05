@@ -59,6 +59,7 @@ $(function(){
 	});
 
 	socket.on("authorized", function() {
+		$("#terminal pre").html("");
 		$("#login").hide();
 		$("#block").hide();
 		log("Authorized");

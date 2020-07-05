@@ -6,34 +6,32 @@ webCLI.setLogStatus(true);
 
 webCLI.interpreter(commandHandler);
 
-webCLI.onConnect(onConnect);
+webCLI.onLogin(onLogin);
 
 webCLI.start();
 
-function commandHandler(command, args)
+function commandHandler(message)
 {
+	const args = message.content.trim().split(/ +/g);
+	const command = args.shift().toLowerCase();
+
 	if(command === "say")
 	{
 		let response = "";
 		args.forEach(arg => {response += arg + " "});
-		if(args) webCLI.sendLog(response); //Send a message back to the client.
-	}
-	else if(command === "confirm")
-	{
-			//console.log(webCLI.sendProbe("are you sure?")); //ToDo
-	}
-	else if (command === "help")
-	{
-		webCLI.sendLog("List of commands:\n" +
+		if(args) message.respond(response); //Send a message back to the client.
+	} else if(command === "confirm") {
+		//console.log(webCLI.sendProbe("are you sure?")); //ToDo
+	} else if (command === "help") {
+		message.respond("List of commands:\n" +
 		"\tsay\n" +
 		"\tconfirm\n");
-	}
-	else
-	{
-		webCLI.sendLog("Invalid command. Try `help`.");
+	} else {
+		message.respond("Invalid command. Try `help`.");
 	}
 }
 
-function onConnect(){
-	webCLI.sendLog("\thello\n\tbud");
+function onLogin(){
+	message.respond("\thello\n\tbud");
+	//webCLI.sendLog("\thello\n\tbud");
 }

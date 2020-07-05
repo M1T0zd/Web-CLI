@@ -1,9 +1,5 @@
 'use strict';
 
-//console.log(Date());
-//console.log();
-//console.log('Booting...');
-
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
@@ -18,12 +14,12 @@ var connectedSocket = null;
 io.on('connection', function(socket) {
 	if(!connectedSocket)
 	{	
-		print(`Someone is connected via Web-CLI. ID: ${socket.id} (IP: ${socket.handshake.address})`);
+		print(`Web-CLI user has connected. ID: ${socket.id} (IP: ${socket.handshake.address})`);
 		socket.emit('log', 'Connection Established');
 
-		socket.on("login", onLogin);
+		socket.on("login", onEnter);
 		socket.on("data", onData);
-		socket.on("logout", onLogout);
+		socket.on("logout", onExit);
 
 
 		socket.on('disconnect', function(){authorized = false; connectedSocket = null; print(`Web-CLI user has disconnected. ID: ${socket.id}\n`);});
@@ -38,45 +34,41 @@ io.on('connection', function(socket) {
 	var blocked = false;
 	
 	var attempts = 0;
-	function onLogin(data) {
-		if(blocked)
-		{
+	function onEnter(data) {
+		if(blocked) {
 			return;
-		}
-		else if(data === password)
-		{
+		} else if(data === password) {
 			authorized = true;
 			connectedSocket = socket;
 			print(`Web-CLI user has logged in. ID: ${socket.id}`);
 			socket.emit("authorized");
 			onLogin();
-		}
-		else if(attempts >= allowedAttempts)
-		{
+		}	else if(attempts >= allowedAttempts) {
 			blocked = true;
 			attempts = 0;
 			setTimeout(async function(){blocked = false;}, 180000);
-		}
-		else
-		{
+		} else {
 			attempts++;
 		}
 	}
 
 	function onData(data) {
-		if(authorized && data)
-		{
-			const args = data.trim().split(/ +/g);
-			const command = args.shift().toLowerCase();
+		if(authorized && data) {
+			const message = new function(){
+				this.content = data;
+				this.respond = function(data){
+				 	connectedSocket.emit("log", data);
+				}
+			}
 
-			interpret(command, args);
+			interpret(message);
 		}	
 	}
 
-	function onLogout(data) {
+	function onExit(data) {
 		if(authorized) {
 			authorized = false;
-			connectedSocket = null
+			connectedSocket = null;
 			socket.emit("log", "Logged Out");
 			print(`Web-CLI user has logged out. ID: ${socket.id}`);
 		}
@@ -115,12 +107,14 @@ module.exports = {
 	{
 		if(!interpreterIsSet) {throw new Error("You must set the 'interpreter' function first.\nUse 'interpreter()' to pass a function to be used as the interpreter")}
 
+		print('Starting the Web-CLI...');
+
 		app.use(express.static(__dirname + '/client'));
 		server.listen(port);
 
 		running = true;
 
-		print(`Web-CLI running on port '${port}'.`);
+		print(`Web-CLI running on port '${port}'.\n`);
 	},
 
 	//Settings
@@ -136,9 +130,9 @@ module.exports = {
 
 		port = _port;
 	},
-	allowedAttempts: function(_allowedAttempts) {
+	setAllowedAttempts: function(_allowedAttempts) {
 		if(running) {throw new Error("You can't change the allowed attempts after starting the Web-CLI.")}
-		else if((typeof _allowedAttempts) !== "number" || Number.isInteger(_allowedAttempts)) {throw new Error("Parameter must be of type: 'number' and be an integer.")}
+		else if((typeof _allowedAttempts) !== "number" || Number.isInteger(_allowedAttempts)) {throw new Error("Parameter must be of type 'number' and be an integer.")}
 		
 		allowedAttempts = _allowedAttempts;
 	},
@@ -179,9 +173,3 @@ function print(msg)
 		console.log(('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ':' + ('0'+d.getSeconds()).slice(-2) + '| ' + msg);
 	}
 }
-
-
-
-//console.log('Booting complete');
-//console.log(`Running the server on port ${port}...`);
-//console.log('-------------------------------------\n');
