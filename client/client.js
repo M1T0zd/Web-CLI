@@ -21,8 +21,7 @@ $(function(){
 			if(data === "clear") $("#terminal pre").html("");
 			else if(data === "exit" || data === "logout") {
 				socket.emit("logout");
-				$("#login").show();
-				$("#block").show();
+				showLogin();
 			}
 			else if(data) socket.emit("data", data);
 
@@ -59,13 +58,13 @@ $(function(){
 	});
 
 	socket.on("authorized", function() {
-		$("#terminal pre").html("");
-		$("#login").hide();
-		$("#block").hide();
+		hideLogin();
 		log("Authorized");
 	});
 
 	socket.on("log", log);
+
+	socket.on('disconnect', showLogin);
 
 	function log(log)
 	{
@@ -74,6 +73,21 @@ $(function(){
 		$("#terminal pre").append(log + "<br>");
 
 		$("#terminal").scrollTop($("#terminal")[0].scrollHeight);
+	}
+
+	// Tools
+	function showLogin() {
+		$("#login input").val("");
+		$("#terminal pre").html("");
+		$("#login").show();
+		$("#block").show();
+	}
+
+	function hideLogin() {
+		$("#login input").val("");
+		$("#terminal pre").html("");
+		$("#login").hide();
+		$("#block").hide();
 	}
 });
 
