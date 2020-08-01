@@ -3,6 +3,7 @@ webCLI = require("../web-cli.js");
 webCLI.setPassword("secret");
 webCLI.setPort("8080");
 webCLI.setLogStatus(true);
+webCLI.setWhitelist("./whitelist.txt");
 
 webCLI.interpreter(commandHandler);
 
@@ -32,6 +33,6 @@ function commandHandler(message)
 }
 
 function onLogin(){
-	message.respond("\thello\n\tbud");
+	//message.respond("\thello\n\tbud");
 	//webCLI.sendLog("\thello\n\tbud");
 }

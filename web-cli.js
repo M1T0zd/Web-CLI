@@ -12,8 +12,12 @@ const io = socketio(server);
 
 var connectedSocket = null;
 io.on('connection', function(socket) {
-	if(!connectedSocket)
-	{	
+	//console.log(whitelist.length);console.log(!isWhitelisted(socket));console.log(isBlacklisted(socket));
+	if((whitelist.length && !isWhitelisted(socket)) || isBlacklisted(socket)) {
+		socket.emit('log', 'Connection Rejected');
+		socket.disconnect(true);
+		print(`Web-CLI user has been denied connection. ID: ${socket.id} (IP: ${socket.handshake.address})`)
+	} else if(!connectedSocket) {	
 		print(`Web-CLI user has connected. ID: ${socket.id} (IP: ${socket.handshake.address})`);
 		socket.emit('log', 'Connection Established');
 
@@ -23,9 +27,7 @@ io.on('connection', function(socket) {
 
 
 		socket.on('disconnect', function(){authorized = false; connectedSocket = null; print(`Web-CLI user has disconnected. ID: ${socket.id}\n`);});
-	}
-	else
-	{
+	} else {
 		print(`Web-CLI is occupied. ${socket.id} is blocked.`);
 		socket.emit('log', 'Connection is occupied. No access available.');
 	}
@@ -91,6 +93,8 @@ var port = 80;
 
 var allowedAttempts = 3;
 var logStatus = false;
+var whitelist = [];
+var blacklist = [];
 
 
 //API FUNCTIONS
@@ -143,6 +147,35 @@ module.exports = {
 
 		logStatus = set;
 	},
+	setWhitelist: function(file)
+	{
+		if(running) {throw new Error("You can't set a whitelist after starting the Web-CLI.")}
+		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
+		else if(blacklist.length) {throw new Error("There has already been a blacklist set.")}
+		try {
+			const fs = require('fs');
+			const path = require("path");
+			whitelist = fs.readFileSync(path.resolve(path.dirname(process.mainModule.filename), file), "UTF-8").split('\n').filter(x => x);
+		} catch (error) {
+			console.log(error)
+			if(error.code === "ENOENT") {throw new Error("Whitelist file could not be found.")}
+			else{throw new Error("The whitelist file might be formatted incorrectly or there is another problem.")}
+		}
+	},
+	setBlacklist: function(file)
+	{
+		if(running) {throw new Error("You can't set a blacklist after starting the Web-CLI.")}
+		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
+		else if(whitelist.length) {throw new Error("There has already been a whitelist set.")}
+		try {
+			const fs = require('fs');
+			const path = require("path");
+			blacklist = fs.readFileSync(path.resolve(path.dirname(process.mainModule.filename), file), "UTF-8").split('\n').filter(x => x);
+		} catch (error) {
+			if(error.code === "ENOENT") {throw new Error("Blacklist file could not be found.")}
+			else{throw new Error(`The blacklist file might be formatted incorrectly or there is another problem.\nError: ${error}`)}
+		}
+	},
 
 	//Utility
 	sendLog: function(data) {
@@ -164,12 +197,19 @@ module.exports = {
 
 
 //Internal functions
-function print(msg)
-{
-	if(logStatus)
-	{
+function print(msg) {
+	if(logStatus) {
 		let d = new Date();
-
-		console.log(('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ':' + ('0'+d.getSeconds()).slice(-2) + '| ' + msg);
+		console.log(('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ':' + ('0'+d.getSeconds()).slice(-2) + '| ' + msg); // Example: "02:24:50| msg"
 	}
+}
+
+function isWhitelisted(socket) {
+	for(let i = 0; i < whitelist.length; i++) { if(whitelist[i] == socket.handshake.address) return true }
+	return false;
+}
+
+function isBlacklisted(socket) {
+	for(let i = 0; i < blacklist.length; i++) { if(blacklist[i] == socket.handshake.address) return true }
+	return false;
 }
