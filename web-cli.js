@@ -12,7 +12,7 @@ const io = socketio(server);
 
 var connectedSocket = null;
 io.on('connection', function(socket) {
-	if((whitelist.length && !isWhitelisted(socket)) || isBlacklisted(socket)) {
+	if((settings.whitelist && !isWhitelisted(socket)) || isBlacklisted(socket)) {
 		socket.emit('log', 'Connection Rejected');
 		socket.disconnect(true);
 		print(`Web-CLI user has been denied connection. ID: ${socket.id} (IP: ${socket.handshake.address})`)
@@ -38,14 +38,14 @@ io.on('connection', function(socket) {
 	function onEnter(data) {
 		if(blocked) {
 			return;
-		} else if(data === password) {
+		} else if(data === settings.password) {
 			authorized = true;
 			connectedSocket = socket;
 			print(`Web-CLI user has logged in. ID: ${socket.id}`);
 			socket.emit("authorized");
 			let user = new (require("./classes/user.js"))(socket);
 			onLogin(user);
-		} else if(attempts >= allowedAttempts) {
+		} else if(attempts >= settings.allowedAttempts) {
 			blocked = true;
 			attempts = 0;
 			setTimeout(async function(){blocked = false;}, 180000);
@@ -82,13 +82,12 @@ var running = false;
 var interpreterIsSet = false;
 
 //Setting variables
-var password = "admin";
-var port = 80;
+var settings = {};
+settings.password = "admin";
+settings.port = 80;
 
-var allowedAttempts = 3;
-var logStatus = false;
-var whitelist = [];
-var blacklist = [];
+settings.allowedAttempts = 3;
+settings.logStatus = false;
 
 
 //API FUNCTIONS
@@ -108,48 +107,48 @@ module.exports = {
 		print('Starting the Web-CLI...');
 
 		app.use(express.static(__dirname + '/client'));
-		server.listen(port);
+		server.listen(settings.port);
 
 		running = true;
 
-		print(`Web-CLI running on port '${port}'.\n`);
+		print(`Web-CLI running on port '${settings.port}'.\n`);
 	},
 
 	//Settings
-	setPassword: function(_password) {
+	setPassword: function(password) {
 		if(running) {throw new Error("You can't change the password after starting the Web-CLI.")}
-		else if((typeof _password) !== "string") {throw new Error("Parameter must be of type: 'string'")}
+		else if((typeof password) !== "string") {throw new Error("Parameter must be of type: 'string'")}
 
-		password = _password;
+		settings.password = password;
 	},
-	setPort: function(_port) {
+	setPort: function(port) {
 		if(running) {throw new Error("You can't change the port after starting the Web-CLI.")}
-		else if(!Number.isInteger(Number(_port))) {throw new Error("Parameter must be an integer.")}
+		else if(!Number.isInteger(Number(port))) {throw new Error("Parameter must be an integer.")}
 
-		port = _port;
+		settings.port = port;
 	},
-	setAllowedAttempts: function(_allowedAttempts) {
+	setAllowedAttempts: function(allowedAttempts) {
 		if(running) {throw new Error("You can't change the allowed attempts after starting the Web-CLI.")}
-		else if((typeof _allowedAttempts) !== "number" || Number.isInteger(_allowedAttempts)) {throw new Error("Parameter must be of type 'number' and be an integer.")}
+		else if((typeof allowedAttempts) !== "number" || Number.isInteger(_allowedAttempts)) {throw new Error("Parameter must be of type 'number' and be an integer.")}
 		
-		allowedAttempts = _allowedAttempts;
+		settings.allowedAttempts = allowedAttempts;
 	},
 	setLogStatus: function(set)
 	{
 		if(running) {throw new Error("You can't change the log setting after starting the Web-CLI.")}
 		else if((typeof set) !== "boolean") {throw new Error("Parameter must be of type: 'boolean'")}
 
-		logStatus = set;
+		settings.logStatus = set;
 	},
 	setWhitelist: function(file)
 	{
 		if(running) {throw new Error("You can't set a whitelist after starting the Web-CLI.")}
 		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
-		else if(blacklist.length) {throw new Error("There has already been a blacklist set.")}
+		else if(settings.blacklist) {throw new Error("There has already been a blacklist set.")}
 		try {
 			const fs = require('fs');
 			const path = require("path");
-			whitelist = fs.readFileSync(path.resolve(path.dirname(process.mainModule.filename), file), "UTF-8").split('\n').filter(x => x);
+			settings.whitelist = fs.readFileSync(path.resolve(path.dirname(process.mainModule.filename), file), "UTF-8").split('\n').filter(x => x);
 		} catch (error) {
 			console.log(error)
 			if(error.code === "ENOENT") {throw new Error("Whitelist file could not be found.")}
@@ -160,11 +159,11 @@ module.exports = {
 	{
 		if(running) {throw new Error("You can't set a blacklist after starting the Web-CLI.")}
 		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
-		else if(whitelist.length) {throw new Error("There has already been a whitelist set.")}
+		else if(settings.whitelist) {throw new Error("There has already been a whitelist set.")}
 		try {
 			const fs = require('fs');
 			const path = require("path");
-			blacklist = fs.readFileSync(path.resolve(path.dirname(process.mainModule.filename), file), "UTF-8").split('\n').filter(x => x);
+			settings.blacklist = fs.readFileSync(path.resolve(path.dirname(process.mainModule.filename), file), "UTF-8").split('\n').filter(x => x);
 		} catch (error) {
 			if(error.code === "ENOENT") {throw new Error("Blacklist file could not be found.")}
 			else{throw new Error(`The blacklist file might be formatted incorrectly or there is another problem.\nError: ${error}`)}
@@ -192,18 +191,22 @@ module.exports = {
 
 //Internal functions
 function print(msg) {
-	if(logStatus) {
+	if(settings.logStatus) {
 		let d = new Date();
 		console.log(('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2) + ':' + ('0'+d.getSeconds()).slice(-2) + '| ' + msg); // Example: "02:24:50| msg"
 	}
 }
 
 function isWhitelisted(socket) {
-	for(let i = 0; i < whitelist.length; i++) { if(whitelist[i] == socket.handshake.address) return true }
-	return false;
+	if(settings.whitelist) {
+		for(let i = 0; i < settings.whitelist.length; i++) { if(settings.whitelist[i] == socket.handshake.address) return true }
+		return false;
+	}
 }
 
 function isBlacklisted(socket) {
-	for(let i = 0; i < blacklist.length; i++) { if(blacklist[i] == socket.handshake.address) return true }
-	return false;
+	if(settings.blacklist) {
+		for(let i = 0; i < settings.blacklist.length; i++) { if(settings.blacklist[i] == socket.handshake.address) return true }
+		return false;
+	}
 }
