@@ -12,7 +12,6 @@ const io = socketio(server);
 
 var connectedSocket = null;
 io.on('connection', function(socket) {
-	//console.log(whitelist.length);console.log(!isWhitelisted(socket));console.log(isBlacklisted(socket));
 	if((whitelist.length && !isWhitelisted(socket)) || isBlacklisted(socket)) {
 		socket.emit('log', 'Connection Rejected');
 		socket.disconnect(true);
@@ -44,8 +43,9 @@ io.on('connection', function(socket) {
 			connectedSocket = socket;
 			print(`Web-CLI user has logged in. ID: ${socket.id}`);
 			socket.emit("authorized");
-			onLogin();
-		}	else if(attempts >= allowedAttempts) {
+			let user = new (require("./classes/user.js"))(socket);
+			onLogin(user);
+		} else if(attempts >= allowedAttempts) {
 			blocked = true;
 			attempts = 0;
 			setTimeout(async function(){blocked = false;}, 180000);
@@ -56,14 +56,8 @@ io.on('connection', function(socket) {
 
 	function onData(data) {
 		if(authorized && data) {
-			const message = new function(){
-				this.content = data;
-				this.respond = function(data){
-				 	connectedSocket.emit("log", data);
-				}
-			}
-
-			interpret(message);
+			let user = new (require("./classes/user.js"))(socket);
+			interpret(user, data);
 		}	
 	}
 
