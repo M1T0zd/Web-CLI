@@ -23,7 +23,7 @@ function commandHandler(user, message)
 	} else if(command === "confirm") {
 		//console.log(webCLI.sendProbe("are you sure?")); //ToDo
 	} else if (command === "test") {
-		user.send(user.id + " | " + user.ip)
+		webCLI.sendBroadcast("Hey");
 	} else if (command === "help") {
 		user.send("List of commands:\n" +
 		"\tsay\n" +

@@ -10,7 +10,7 @@ class User {
         this.#socket = socket
         this.id = socket.id
         this.ip = socket.handshake.address
-
+        this.isLoggedin;
     }
 
     send(data) {

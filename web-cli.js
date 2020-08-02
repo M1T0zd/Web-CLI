@@ -41,6 +41,7 @@ io.on('connection', function(socket) {
 		} else if(data === settings.password) {
 			authorized = true;
 			connectedSocket = socket;
+			socket.join("authorized"); // For global messages (sendAll();).
 			print(`Web-CLI user has logged in. ID: ${socket.id}`);
 			socket.emit("authorized");
 			let user = new (require("./classes/user.js"))(socket);
@@ -171,11 +172,16 @@ module.exports = {
 	},
 
 	//Utility
-	sendLog: function(data) {
-		if(connectedSocket) {
-			connectedSocket.emit("log", data);
-		}
+	// sendLog: function(data) {
+	// 	if(connectedSocket) {
+	// 		connectedSocket.emit("log", data);
+	// 	}
+	// },
+	sendAll: function(data) { //Broadcasts a message to all connected and authorized users.
+		io.to("authorized").emit("log", data);
 	},
+	users: [] // Returns array of all currently connected users.
+	,
 
 	//Events
 	onLogin: function(callback) {
