@@ -41,7 +41,7 @@ io.on('connection', function(socket) {
 		} else if(data === settings.password) {
 			authorized = true;
 			connectedSocket = socket;
-			socket.join("authorized"); // For global messages (sendAll();).
+			socket.join("authorized"); // For sending global messages.
 			print(`Web-CLI user has logged in. ID: ${socket.id}`);
 			socket.emit("authorized");
 			let user = new (require("./classes/user.js"))(socket);
@@ -144,8 +144,8 @@ module.exports = {
 	setWhitelist: function(file)
 	{
 		if(running) {throw new Error("You can't set a whitelist after starting the Web-CLI.")}
-		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
 		else if(settings.blacklist) {throw new Error("There has already been a blacklist set.")}
+		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
 		try {
 			const fs = require('fs');
 			const path = require("path");
@@ -159,8 +159,8 @@ module.exports = {
 	setBlacklist: function(file)
 	{
 		if(running) {throw new Error("You can't set a blacklist after starting the Web-CLI.")}
-		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
 		else if(settings.whitelist) {throw new Error("There has already been a whitelist set.")}
+		else if((typeof file) !== "string") {throw new Error("Parameter must be of type: 'string'")}
 		try {
 			const fs = require('fs');
 			const path = require("path");
@@ -177,7 +177,7 @@ module.exports = {
 	// 		connectedSocket.emit("log", data);
 	// 	}
 	// },
-	sendAll: function(data) { //Broadcasts a message to all connected and authorized users.
+	sendAll: function(data) { // Broadcasts a message to all connected and authorized users.
 		io.to("authorized").emit("log", data);
 	},
 	users: [] // Returns array of all currently connected users.
