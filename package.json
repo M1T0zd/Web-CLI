@@ -5,14 +5,13 @@
   "main": "web-cli.js",
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.4.1"
   },
   "devDependencies": {
-    "jshint": "^2.11.2",
-    "nodemon": "^1.19.4"
+    "jshint": "^2.12.0",
+    "nodemon": "^2.0.7"
   },
   "scripts": {
-    "start": "nodemon test/test.js",
     "test": "nodemon test/test.js",
     "jshint": "jshint web-cli.js"
   },
