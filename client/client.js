@@ -64,7 +64,10 @@ $(function(){
 
 	socket.on("log", log);
 
-	socket.on('disconnect', showLogin);
+	socket.on('disconnect', () => {
+		log("Disconnected");
+		showLogin();
+	});
 
 	function log(log)
 	{
