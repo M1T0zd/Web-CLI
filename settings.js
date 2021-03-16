@@ -1,5 +1,5 @@
 module.exports = {
-	password: "admin",
+	password: "",
 	port: 80,
 	maxAllowedAttempts: 3,
 	maxAllowedUsers: 1,

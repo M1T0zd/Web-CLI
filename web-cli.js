@@ -30,10 +30,11 @@ var settings = require('./settings.js');
 
 //API FUNCTIONS
 module.exports = {
-	// Core (ESSENTIAL!)
-	start: function()
+	// Main (ESSENTIAL!)
+	start()
 	{
-		if(!interpreterIsSet) {throw new Error("You must set the 'interpreter' function first.\nUse 'interpreter()' to pass a function to be used as the interpreter")}
+		if(!interpreterIsSet) { throw new Error("You must set the 'onData' event before starting!") }
+		if(!settings.password) { throw new Error("Password must be set before starting!") }
 
 		print('Starting the Web-CLI...');
 
@@ -46,94 +47,103 @@ module.exports = {
 	},
 
 	// Settings
-	setPassword: function(password) // ESSENTIAL!
+	setPassword(password) // ESSENTIAL!
 	{
-		if(running) {throw new Error("You can't change the password after starting the Web-CLI.")}
-		else if((typeof password) !== "string") {throw new TypeError("Argument must be of type: 'string'")}
+		if(running) { throw new Error("You can't change the password after starting the Web-CLI.") }
+		else if((typeof password) !== "string") { throw new TypeError("Argument must be of type: 'string'") }
 
 		settings.password = password;
 	},
-	setPort: function(port) {
-		if(running) {throw new Error("You can't change the port after starting the Web-CLI.")}
-		else if(!Number.isInteger(Number(port))) {throw new TypeError("Argument must be an integer.")}
+	setPort(port) {
+		if(running) { throw new Error("You can't change the port after starting the Web-CLI.") }
+		else if(!Number.isInteger(Number(port))) { throw new TypeError("Argument must be an integer.") }
 
 		settings.port = port;
 	},
-	setMaxAllowedAttempts: function(maxAllowedAttempts)
+	setMaxAllowedAttempts(maxAllowedAttempts)
 	{
-		if(running) {throw new Error("You can't change the allowed attempts after starting the Web-CLI.")}
+		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
 		else if (!Number.isInteger(Number(maxAllowedAttempts))) { throw new TypeError("Argument must be an integer.") }
 		
-		settings.maxAllowedAttempts = maxAllowedAttempts;
+		if(maxAllowedAttempts == 0) { // 0 = unlimited
+			settings.maxAllowedAttempts = Infinity; 
+		} else {
+			settings.maxAllowedAttempts = maxAllowedAttempts;			
+		}
 	},
-	setMaxAllowedUsers: function(maxAllowedUsers)
+	setMaxAllowedUsers(maxAllowedUsers)
 	{
 		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
 		else if (!Number.isInteger(Number(maxAllowedUsers))) { throw new TypeError("Argument must be an integer.") }
 
-		settings.maxAllowedUsers = maxAllowedUsers;
+		if(maxAllowedUsers == 0) { // 0 = unlimited
+			settings.maxAllowedUsers = Infinity;
+		} else {
+			settings.maxAllowedUsers = maxAllowedUsers;
+		}
 	},
-	setLogStatus: function(set)
+	setWhitelist(file)
 	{
-		if(running) {throw new Error("You can't change the log setting after starting the Web-CLI.")}
-		else if((typeof set) !== "boolean") {throw new TypeError("Argument must be of type: 'boolean'")}
-
-		settings.logStatus = set;
-	},
-	setWhitelist: function(file)
-	{
-		if(running) {throw new Error("You can't set a whitelist after starting the Web-CLI.")}
-		else if((typeof file) !== "string") {throw new TypeError("Argument must be of type: 'string'")}
-		else if(settings.blacklist.length) {throw new ERR_INCOMPATIBLE_OPTION_PAIR("Whitelist cannot be set in combination with the blacklist.")}
+		if(running) { throw new Error("You can't set a whitelist after starting the Web-CLI.") }
+		else if((typeof file) !== "string") { throw new TypeError("Argument must be of type: 'string'") }
+		else if(settings.blacklist.length) { throw new ERR_INCOMPATIBLE_OPTION_PAIR("Whitelist cannot be set in combination with the blacklist.") }
 		try {
 			const fs = require('fs');
 			const path = require("path");
 			settings.whitelist = fs.readFileSync(path.resolve(path.dirname(require.main.filename), file), "UTF-8").split('\n').filter(x => x);
 		} catch (error) {
-			if(error.code === "ENOENT") {throw new ENOENT("Whitelist file could not be found.")}
-			else{throw new Error(`The whitelist file might be formatted incorrectly or there is another problem.\nError: ${error}`)}
+			if(error.code === "ENOENT") { throw new ENOENT("Whitelist file could not be found.") }
+			else { throw new Error(`The whitelist file might be formatted incorrectly or there is another problem.\nError: ${error}`) }
 		}
 	},
-	setBlacklist: function(file)
+	setBlacklist(file)
 	{
-		if(running) {throw new Error("You can't set a blacklist after starting the Web-CLI.")}
-		else if((typeof file) !== "string") {throw new TypeError("Argument must be of type: 'string'")}
-		else if(settings.whitelist.length) {throw new ERR_INCOMPATIBLE_OPTION_PAIR("Blacklist cannot be set in combination with the whitelist.")}
+		if(running) { throw new Error("You can't set a blacklist after starting the Web-CLI.") }
+		else if((typeof file) !== "string") { throw new TypeError("Argument must be of type: 'string'") }
+		else if(settings.whitelist.length) { throw new ERR_INCOMPATIBLE_OPTION_PAIR("Blacklist cannot be set in combination with the whitelist.") }
 		try {
 			const fs = require('fs');
 			const path = require("path");
 			settings.blacklist = fs.readFileSync(path.resolve(path.dirname(require.main.filename), file), "UTF-8").split('\n').filter(x => x);
-		} catch (error) {
-			if(error.code === "ENOENT") {throw new ENOENT("Blacklist file could not be found.")}
-			else{throw new Error(`The blacklist file might be formatted incorrectly or there is another problem.\nError: ${error}`)}
+		} catch(error) {
+			if(error.code === "ENOENT") { throw new ENOENT("Blacklist file could not be found.") }
+			else{ throw new Error(`The blacklist file might be formatted incorrectly or there is another problem.\nError: ${error}`) }
 		}
+	},
+	setLogStatus(set)
+	{
+		if(running) { throw new Error("You can't change the log setting after starting the Web-CLI.") }
+		else if((typeof set) !== "boolean") { throw new TypeError("Argument must be of type: 'boolean'") }
+
+		settings.logStatus = set;
 	},
 
 	// Events
-	onData: function (interpreter) // ESSENTIAL!
+	onData(interpreter) // ESSENTIAL!
 	{
-		if (running) { throw new Error("You can't set the interpreter after starting the Web-CLI.") }
-		else if ((typeof interpreter) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+		if(running) { throw new Error("You can't set the interpreter after starting the Web-CLI.") }
+		else if((typeof interpreter) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
 
 		globals.onData = interpreter;
 		interpreterIsSet = true;
 	},
-	onLogin: function(callback) {
-		if(running) {throw new Error("You can't set an event after starting the Web-CLI.")}
-		else if((typeof callback) !== "function") {throw new TypeError("Argument must be of type: 'function'")}
+	onLogin(callback) {
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if((typeof callback) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
 
 		globals.onLogin = callback;
 	},
-	onLogout: function (callback) {
-		if (running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+	onLogout(callback) {
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
 		else if ((typeof callback) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
 
 		globals.onLogout = callback;
 	},
 
 	// Utility
-	broadcast: function(data)
+	broadcast(data)
 	{
+		if(!running) { throw new Error("WebCLI must be running first before broadcasting.") }
 		io.to("users").emit("log", data);
 	},
 
