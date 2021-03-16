@@ -15,6 +15,7 @@ const User = require('./classes/user.js');
 
 io.on('connection', function(socket) {
 	var connection = new Connection(socket);
+	connection.attempts = 0;
 	connection.on("login", data => User.tryLogin(connection, data));
 });
 
