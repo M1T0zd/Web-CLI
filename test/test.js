@@ -14,36 +14,38 @@ function commandHandler(user, message) {
 	const command = args.shift().toLowerCase();
 
 	if(command === "say") {
+		if(!args) return;
 		let response = "";
 		args.forEach(arg => {response += arg + " "});
-		if(args) user.send(response); //Send a message back to the client.
-	} else if (command === "broadcast") {
+		user.send(response); // Send a message back to the user.
+	} else if(command === "broadcast") {
+		if(!args) return;
 		let response = "";
 		args.forEach(arg => { response += arg + " " });
-		if(args) webcli.broadcast(response); //Send a message back to the client.
-	} else if (command === "connections") {
+		webcli.broadcast(response); // Send to all user.
+	} else if(command === "connections") {
 		user.send("Connection count: " + webcli.connections.length);
 		user.send("Connections:");
 		webcli.connections.forEach(connection => {
 			user.send(`\tConnection-ID: ${connection.id}, Connection-IP: ${connection.ip}`);
 		});
 		user.send("");
-	} else if (command === "users") {
+	} else if(command === "users") {
 		user.send("User count: " + webcli.users.length);
 		user.send("Users:");
 		webcli.users.forEach(u => {
 			user.send(`\tUser-ID: ${u.id}, Connection-ID: ${u.connection.id}`);
 		});
 		user.send("");
-	} else if(command === "confirm") {
-		//console.log(webcli.sendProbe("are you sure?")); //ToDo
-	} else if (command === "help") {
+	} else if(command === "prompt") { // ToDo
+		//let response = user.prompt("Favorite color?");
+		//user.send(`${response} is a nice color indeed.`);
+	} else if(command === "help") {
 		user.send("List of commands:\n" +
 		"\tsay\n" +
 		"\tbroadcast\n" +
 		"\tconnections\n" +
-		"\tusers\n" +
-		"\tconfirm\n");
+		"\tusers\n");
 	} else {
 		user.send("Invalid command. Try `help`.");
 	}
