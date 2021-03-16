@@ -23,13 +23,12 @@ module.exports = class Connection { // Mostly a socket.io wrapper class
 
 	#connect() {
 		if(!this.#isWhitelisted() || this.#isBlacklisted()) {
-			this.alert('Connection Rejected');
+			this.alert({msg:'Connection rejected', type: 'error'});
 			this.disconnect();
 			print(`Connection has been denied. IP: ${this.ip}`)
 		} else {
 			Connection.connections.push(this);
-
-			this.alert('Connection Established');
+			this.alert({msg:'Connection established', type:'info'});
 			print(`New connection established. Connection-ID: ${this.id} (IP: ${this.ip})`);
 		}
 	}
@@ -48,7 +47,7 @@ module.exports = class Connection { // Mostly a socket.io wrapper class
 	}
 
 	alert(message) {
-		this.#socket.emit('log', message);
+		this.#socket.emit('alert', message);
 	}
 
 	on(event, callback) { 
@@ -64,7 +63,7 @@ module.exports = class Connection { // Mostly a socket.io wrapper class
 	}
 
 	leave(group) {
-		this.#socket.removeAllListeners(group)
+		this.#socket.leave(group);
 	}
 
 

@@ -57,39 +57,54 @@ $(function(){
 		}
 	});
 
-	socket.on("authorized", function() {
+
+	socket.on("log", log);
+
+	socket.on("alert", alert);
+
+	socket.on("authorized", () => {
 		hideLogin();
 		log("Authorized");
 	});
 
-	socket.on("log", log);
-
 	socket.on('disconnect', () => {
+		alert({ msg:"Disconnected from server", type:"error" });
 		log("Disconnected");
 		showLogin();
 	});
 
-	function log(log)
-	{
+	function log(log) {
 		console.log(log)
-
 		$("#terminal pre").append(log + "<br>");
-
 		$("#terminal").scrollTop($("#terminal")[0].scrollHeight);
+	}
+
+	function alert(alert) {
+		$("#alert").text(alert.msg);
+
+		switch(alert.type) {
+			case "info":
+				$("#alert").css("color", "#080");
+				break;
+			case "warn":
+				$("#alert").css("color", "#880");
+				break;
+			case "error":
+				$("#alert").css("color", "#800");
+				break;
+		}
 	}
 
 	// Tools
 	function showLogin() {
 		$("#login input").val("");
 		$("#terminal pre").html("");
-		$("#login").show();
 		$("#block").show();
 	}
 
 	function hideLogin() {
 		$("#login input").val("");
 		$("#terminal pre").html("");
-		$("#login").hide();
 		$("#block").hide();
 	}
 });
