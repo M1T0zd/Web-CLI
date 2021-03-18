@@ -35,7 +35,7 @@ class Connection { // Mostly a socket.io wrapper class
     }
 
 	#connect() {
-		if(!this.#isWhitelisted() || this.#isBlacklisted()) {
+		if((settings.whitelist.length && !this.#isWhitelisted()) || this.#isBlacklisted()) {
 			this.alert({msg:'Connection rejected', type: 'error'});
 			this.disconnect();
 			print(`Connection has been denied.`, `IP: ${this.ip}`)
