@@ -1,16 +1,29 @@
-module.exports = class User {
+/**
+ * Class representing a user currently logged in.
+ * @hideconstructor
+ */
+class User {
     #connection;
     #id;
 
 	static users = [];
     static #nextId = 1;
 
-	get connection() { return this.#connection; }
+	/**
+	 * Sequentially generated ID of the user.
+	 * @return {string} 
+	 */
     get id() { return this.#id; }
+
+	/**
+	 * Corresponding connection of the user.
+	 * @return {Connection}
+	 */
+	get connection() { return this.#connection; }
 
     constructor(connection) {
         this.#connection = connection;
-        this.#id = User.#nextId;
+        this.#id = User.#nextId.toString();
         User.#nextId++;	
 		this.#login(); // User can't exist without being logged in
     }
@@ -31,6 +44,7 @@ module.exports = class User {
 		print(`Web-CLI user has logged in. User-ID: ${this.id} (Connection-ID: ${this.#connection.id})`);
 	}
 
+	/** Forcefully log the user out. */
 	logout() {
 		User.users.splice(User.users.indexOf(this), 1); // Remove user from memory.
 		
@@ -45,16 +59,21 @@ module.exports = class User {
 		print(`Web-CLI user has (been) logged out. User-ID: ${this.id} (Connection-ID: ${this.#connection.id})`);
 	}
 
+	/**
+	 * Send the user a message.
+	 * @param {string} message - Message to be sent.
+	 */
 	send(message) {
 		this.#connection.send(message);
 	}
 
-	// sendPrompt() {
+	// prompt() {
 	// 	const promise = new Promise(() => {
 
 	// 	});
 	// }
 
+	/** @private */
 	static tryLogin(connection, data) {
 		if(connection.blocked) {
 			return;
@@ -91,3 +110,5 @@ var globals = require('../globals.js');
 var settings = require('../settings.js');
 
 const print = globals.print;
+
+module.exports = User;

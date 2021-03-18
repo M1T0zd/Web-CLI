@@ -1,3 +1,5 @@
+/** @module API */
+
 'use strict';
 
 const http = require('http');
@@ -29,9 +31,16 @@ var interpreterIsSet = false;
 //Setting variables
 var settings = require('./settings.js');
 
-//API FUNCTIONS
+//API
+
+
 module.exports = {
 	// Main (ESSENTIAL!)
+
+	/**
+	 * Start the web-cli!
+	 * (ESSENTIAL!)
+	 */
 	start()
 	{
 		if(!interpreterIsSet) { throw new Error("You must set the 'onData' event before starting!") }
@@ -48,6 +57,12 @@ module.exports = {
 	},
 
 	// Settings
+
+	/**
+	 * Set the password.
+	 * (ESSENTIAL!)
+	 * @param {string} password - Password to be used.
+	 */
 	setPassword(password) // ESSENTIAL!
 	{
 		if(running) { throw new Error("You can't change the password after starting the Web-CLI.") }
@@ -55,12 +70,25 @@ module.exports = {
 
 		settings.password = password;
 	},
+
+	/**
+	 * Set the port.
+	 * @param {(number|string)} port - Port to be used.
+	 * @default 80
+	 */
 	setPort(port) {
 		if(running) { throw new Error("You can't change the port after starting the Web-CLI.") }
 		else if(!Number.isInteger(Number(port))) { throw new TypeError("Argument must be an integer.") }
 
 		settings.port = port;
 	},
+
+	/**
+	 * Set the the max number of login attempts allowed before receiving a timeout.
+	 * (0=unlimited)
+	 * @param {(number|string)} maxAllowedAttempts - Number of logins attempts allowed.
+	 * @default 3
+	 */
 	setMaxAllowedAttempts(maxAllowedAttempts)
 	{
 		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
@@ -72,6 +100,13 @@ module.exports = {
 			settings.maxAllowedAttempts = maxAllowedAttempts;			
 		}
 	},
+
+	/**
+	 * Set the max number of concurrent users allowed.
+	 * (o=unlimited)
+	 * @param {(number|string)} maxAllowedUsers - Number of concurrent users allowed.
+	 * @default 1
+	 */
 	setMaxAllowedUsers(maxAllowedUsers)
 	{
 		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
@@ -83,6 +118,12 @@ module.exports = {
 			settings.maxAllowedUsers = maxAllowedUsers;
 		}
 	},
+
+	/**
+	 * Set the path to a file containing IP addresses to be allowed exclusively.
+	 * (File path is relative to the application's entry point - file should be encoded in UTF-8 - Entries should be separated by lines.)
+	 * @param {string} file - Path to file.
+	 */
 	setWhitelist(file)
 	{
 		if(running) { throw new Error("You can't set a whitelist after starting the Web-CLI.") }
@@ -97,6 +138,12 @@ module.exports = {
 			else { throw new Error(`The whitelist file might be formatted incorrectly or there is another problem.\nError: ${error}`) }
 		}
 	},
+
+	/**
+	 * Set the path to a file containing IP addresses to be denied access invariably.
+	 * (File path is relative to the application's entry point - file should be encoded in UTF-8 - Entries should be separated by lines.)
+	 * @param {string} file - Path to file.
+	 */
 	setBlacklist(file)
 	{
 		if(running) { throw new Error("You can't set a blacklist after starting the Web-CLI.") }
@@ -111,6 +158,12 @@ module.exports = {
 			else{ throw new Error(`The blacklist file might be formatted incorrectly or there is another problem.\nError: ${error}`) }
 		}
 	},
+
+	/**
+	 * Set if the Web-CLI will log to console.
+	 * @param {boolean} set - Set logging.
+	 * @default false
+	 */
 	setLogStatus(set)
 	{
 		if(running) { throw new Error("You can't change the log setting after starting the Web-CLI.") }
@@ -120,36 +173,61 @@ module.exports = {
 	},
 
 	// Events
-	onData(interpreter) // ESSENTIAL!
-	{
-		if(running) { throw new Error("You can't set the interpreter after starting the Web-CLI.") }
-		else if((typeof interpreter) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
 
-		globals.onData = interpreter;
+	/**
+	 * Set the `onData` event's callback function.
+	 * (ESSENTIAL!)
+	 * @param {function(user, data)} cb - Callback function - takes user{{@link User}} and data{string}.
+	 */
+	onData(cb) // ESSENTIAL!
+	{
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if((typeof cb) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+
+		globals.onData = cb;
 		interpreterIsSet = true;
 	},
-	onLogin(callback) {
-		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
-		else if((typeof callback) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
 
-		globals.onLogin = callback;
+	/**
+	 * Set the `onLogin` event's callback function.
+	 * @param {function(user:User)} cb - Callback function - takes user{{@link User}}.
+	 */
+	onLogin(cb) {
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if((typeof cb) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+
+		globals.onLogin = cb;
 	},
-	onLogout(callback) {
-		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
-		else if ((typeof callback) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
 
-		globals.onLogout = callback;
+	/**
+	 * Set the `onLogout` event's callback function.
+	 * @param {function(user)} cb - Callback function - takes user{{@link User}}.
+	 */
+	onLogout(cb) {
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if ((typeof cb) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+
+		globals.onLogout = cb;
 	},
 
 	// Utility
-	broadcast(data)
+
+	/**
+	 * Broadcast a message to all current users.
+	 * @param {function} message - Message to be sent.
+	 */
+	broadcast(message)
 	{
 		if(!running) { throw new Error("WebCLI must be running first before broadcasting.") }
-		io.to("users").emit("log", data);
+		io.to("users").emit("log", message);
 	},
 
 	// Data
+	
+	/** Array of all current connections. */
 	connections: Connection.connections,
+
+	/** Array of all current users. */
 	users: User.users
 };
 

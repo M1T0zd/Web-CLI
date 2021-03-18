@@ -1,11 +1,24 @@
-module.exports = class Connection { // Mostly a socket.io wrapper class
+/** 
+ * Class representing a connection currently active.
+ * @hideconstructor
+ */
+class Connection { // Mostly a socket.io wrapper class
     #socket;
     #id;
     #ip;
 
 	static connections = []
 
+	/**
+	 * Randomly generated ID of the connection.
+	 * @return {string}
+	 */
 	get id() { return this.#id; }
+
+	/**
+	 * IP address of the connection.
+	 * @return {string}
+	 */
 	get ip() { return this.#ip; }
 
     constructor(socket) {
@@ -33,35 +46,46 @@ module.exports = class Connection { // Mostly a socket.io wrapper class
 		}
 	}
 
+	/** Forcefully close the connection. */
 	disconnect() {
 		Connection.connections.splice(Connection.connections.indexOf(this), 1); // Remove connection from memory.
 		this.#socket.disconnect(true);
 	}
 
+
+	// Socket.io wrapper funcionts
+
+	/** @private */
 	emit(topic, message) {
 		this.#socket.emit(topic, message);
 	}
 	
+	/** @private */
 	send(message) {
 		this.#socket.emit('log', message);
 	}
 
+	/** @private */
 	alert(message) {
 		this.#socket.emit('alert', message);
 	}
 
+	/** @private */
 	on(event, callback) { 
 		this.#socket.on(event, callback);
 	}
 
+	/** @private */
 	off(event) {
 		this.#socket.removeAllListeners(event);
 	}
 
+	/** @private */
 	join(group) {
 		this.#socket.join(group);
 	}
 
+	/** @private */
 	leave(group) {
 		this.#socket.leave(group);
 	}
@@ -79,3 +103,5 @@ module.exports = class Connection { // Mostly a socket.io wrapper class
 
 const print = require('../globals.js').print;
 var settings = require('../settings.js');
+
+module.exports = Connection;

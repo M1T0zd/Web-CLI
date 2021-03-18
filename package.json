@@ -8,11 +8,15 @@
     "socket.io": "^2.4.1"
   },
   "devDependencies": {
+    "jsdoc": "^3.6.6",
+    "jsdoc-to-markdown": "^7.0.0",
     "jshint": "^2.12.0",
     "nodemon": "^2.0.7"
   },
   "scripts": {
     "test": "nodemon test/test.js",
+    "gendocs": "jsdoc ./web-cli.js ./classes/ -r -d docs",
+    "gendocs-md": "jsdoc2md ./web-cli.js ./classes/* > docs/documentation.md",
     "jshint": "jshint web-cli.js"
   },
   "repository": {

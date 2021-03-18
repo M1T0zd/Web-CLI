@@ -9,8 +9,8 @@ webcli.onData(commandHandler);
 webcli.onLogin(onLogin);
 webcli.start();
 
-function commandHandler(user, message) {
-	const args = message.trim().split(/ +/g);
+function commandHandler(user, data) {
+	const args = data.trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
 
 	if(command === "say") {
