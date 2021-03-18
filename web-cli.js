@@ -103,7 +103,7 @@ module.exports = {
 
 	/**
 	 * Set the max number of concurrent users allowed.
-	 * (o=unlimited)
+	 * (0=unlimited)
 	 * @param {(number|string)} maxAllowedUsers - Number of concurrent users allowed.
 	 * @default 1
 	 */

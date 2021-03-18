@@ -29,7 +29,7 @@ webcli.start(); // Start! (Do after everything is set!)
 // My 'onData' callback function
 function commandHandler(user, data)
 {
-	// Parse the data to a format you like (if you want).
+	// Parse the data to a format you like.
 	const args = data.trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
 
@@ -146,7 +146,7 @@ Set the the max number of login attempts allowed by a connection before getting 
 
 ### setMaxAllowedUsers(maxAllowedUsers)
 Set the max number of concurrent users allowed.
-(o=unlimited)  
+(0=unlimited)  
 **Default**: <code>1</code>  
 | Param | Type | Description |
 | --- | --- | --- |
