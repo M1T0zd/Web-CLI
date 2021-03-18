@@ -90,6 +90,8 @@ From the server you can send responses back in any way you desire. <br>
 	* [setLogStatus(set)](#setLogStatus(set))
 * Events
 	* [onData(cb)*](#onData(cb))
+	* [onConnect(cb)](#onConnect(cb))
+	* [onDisconnect(cb)](#onDisconnect(cb))
 	* [onLogin(cb)](#onLogin(cb))
 	* [onLogout(cb)](#onLogout(cb))
 * Utility
@@ -181,21 +183,35 @@ Set if the Web-CLI will log to console.
 ## --- Events ---
 
 ### onData(cb)*
-Set the `onData` event's callback function.
+Set the `onData` event's listener.
 | Param | Type | Description |
 | --- | --- | --- |
 | cb | <code>function</code> | Callback function - takes user{[User](#User)} and data{string}. |
 <br>
 
+### onConnect(cb)
+Set the `onConnect` event's listener.  
+| Param | Type | Description |
+| --- | --- | --- |
+| cb | <code>function</code> | Callback function - takes connection{[Connection](#Connection)}. |
+<br>
+
+### onDisconnect(cb)
+Set the `onDisconnect` event's listener.  
+| Param | Type | Description |
+| --- | --- | --- |
+| cb | <code>function</code> | Callback function - takes connection{[Connection](#Connection)}. |
+<br>
+
 ### onLogin(cb)
-Set the `onLogin` event's callback function.  
+Set the `onLogin` event's listener.  
 | Param | Type | Description |
 | --- | --- | --- |
 | cb | <code>function</code> | Callback function - takes user{[User](#User)}. |
 <br>
 
 ### onLogout(cb)
-Set the `onLogout` event's callback function.  
+Set the `onLogout` event's listener.  
 | Param | Type | Description |
 | --- | --- | --- |
 | cb | <code>function</code> | Callback function - takes user{[User](#User)}. |

@@ -175,9 +175,9 @@ module.exports = {
 	// Events
 
 	/**
-	 * Set the `onData` event's callback function.
+	 * Set the `onData` event's listener.
 	 * (ESSENTIAL!)
-	 * @param {function(user, data)} cb - Callback function - takes user{{@link User}} and data{string}.
+	 * @param {function(user:User, data:string)} cb - Callback function - takes user{{@link User}} and data{string}.
 	 */
 	onData(cb) // ESSENTIAL!
 	{
@@ -189,7 +189,29 @@ module.exports = {
 	},
 
 	/**
-	 * Set the `onLogin` event's callback function.
+	 * Set the `onConnect` event's listener.
+	 * @param {function(connection:Connection)} cb - Callback function - takes connection{{@link Connection}}.
+	 */
+	onConnect(cb){
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if((typeof cb) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+
+		globals.onConnect = cb;
+	},
+
+	/**
+	 * Set the `onDisconnect` event's listener.
+	 * @param {function(connection:Connection)} cb - Callback function - takes connection{{@link Connection}}.
+	 */
+	onDisconnect(cb){
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if((typeof cb) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+
+		globals.onDisconnect = cb;
+	},
+
+	/**
+	 * Set the `onLogin` event's listener.
 	 * @param {function(user:User)} cb - Callback function - takes user{{@link User}}.
 	 */
 	onLogin(cb) {
@@ -200,8 +222,8 @@ module.exports = {
 	},
 
 	/**
-	 * Set the `onLogout` event's callback function.
-	 * @param {function(user)} cb - Callback function - takes user{{@link User}}.
+	 * Set the `onLogout` event's listener.
+	 * @param {function(user:User)} cb - Callback function - takes user{{@link User}}.
 	 */
 	onLogout(cb) {
 		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }

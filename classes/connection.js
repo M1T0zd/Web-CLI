@@ -41,6 +41,9 @@ class Connection { // Mostly a socket.io wrapper class
 			print(`Connection has been denied.`, `IP: ${this.ip}`)
 		} else {
 			Connection.connections.push(this);
+
+			globals.onConnect(this);
+
 			this.alert({msg:'Connection established', type:'info'});
 			print(`New connection established.`, `Connection-ID: ${this.id}`, `(IP: ${this.ip})`);
 		}
@@ -49,6 +52,9 @@ class Connection { // Mostly a socket.io wrapper class
 	/** Forcefully close the connection. */
 	disconnect() {
 		Connection.connections.splice(Connection.connections.indexOf(this), 1); // Remove connection from memory.
+		
+		globals.onDisconnect(this);
+		
 		this.#socket.disconnect(true);
 	}
 
@@ -105,7 +111,9 @@ class Connection { // Mostly a socket.io wrapper class
 	}
 }
 
-const print = require('../globals.js').print;
+var globals = require('../globals.js');
 var settings = require('../settings.js');
+
+const print = globals.print;
 
 module.exports = Connection;
