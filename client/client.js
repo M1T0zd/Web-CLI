@@ -18,7 +18,11 @@ $(function(){
 			$("#input input").val("");
 			log("> " + data);
 
-			if(data === "clear") $("#terminal p").html("");
+			if(data === "clear") $("#terminal pre").html("");
+			else if(data === "exit" || data === "logout") {
+				socket.emit("logout");
+				showLogin();
+			}
 			else if(data) socket.emit("data", data);
 
 
@@ -53,21 +57,55 @@ $(function(){
 		}
 	});
 
-	socket.on("authorized", function() {
-		$("#login").hide();
-		$("#block").hide();
-		log("Authorized");
-	});
 
 	socket.on("log", log);
 
-	function log(log)
-	{
+	socket.on("alert", alert);
+
+	socket.on("authorized", () => {
+		hideLogin();
+		log("Authorized");
+	});
+
+	socket.on('disconnect', () => {
+		alert({ msg:"Disconnected from server", type:"error" });
+		log("Disconnected");
+		showLogin();
+	});
+
+	function log(log) {
 		console.log(log)
-
 		$("#terminal pre").append(log + "<br>");
-
 		$("#terminal").scrollTop($("#terminal")[0].scrollHeight);
+	}
+
+	function alert(alert) {
+		$("#alert").text(alert.msg);
+
+		switch(alert.type) {
+			case "info":
+				$("#alert").css("color", "#080");
+				break;
+			case "warn":
+				$("#alert").css("color", "#880");
+				break;
+			case "error":
+				$("#alert").css("color", "#800");
+				break;
+		}
+	}
+
+	// Tools
+	function showLogin() {
+		$("#login input").val("");
+		$("#terminal pre").html("");
+		$("#block").show();
+	}
+
+	function hideLogin() {
+		$("#login input").val("");
+		$("#terminal pre").html("");
+		$("#block").hide();
 	}
 });
 

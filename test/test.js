@@ -1,33 +1,56 @@
-webCLI = require("../web-cli.js");
+webcli = require("../web-cli.js");
 
-webCLI.setPassword("secret");
-webCLI.setPort("8080");
-webCLI.setLogStatus(true);
+webcli.setPassword("secret");
+webcli.setPort("8080");
+webcli.setLogStatus(true);
+webcli.setWhitelist("./whitelist.txt");
+webcli.setMaxAllowedUsers(2);
+webcli.onData(commandHandler);
+webcli.onLogin(onLogin);
+webcli.start();
 
-webCLI.interpreter(commandHandler);
+function commandHandler(user, data) {
+	const args = data.trim().split(/ +/g);
+	const command = args.shift().toLowerCase();
 
-webCLI.start();
-
-function commandHandler(command, args)
-{
-	if(command === "say")
-	{
+	if(command === "say") {
+		if(!args) return;
 		let response = "";
 		args.forEach(arg => {response += arg + " "});
-		if(args) webCLI.sendLog(response); //Send a message back to the client.
-	}
-	else if(command === "confirm")
-	{
-			//console.log(webCLI.sendProbe("are you sure?")); //ToDo
-	}
-	else if (command === "help")
-	{
-		webCLI.sendLog("List of commands:\n" +
+		user.send(response); // Send a message back to the user.
+	} else if(command === "broadcast") {
+		if(!args) return;
+		let response = "";
+		args.forEach(arg => { response += arg + " " });
+		webcli.broadcast(response); // Send to all user.
+	} else if(command === "connections") {
+		user.send("Connection count: " + webcli.connections.length);
+		user.send("Connections:");
+		webcli.connections.forEach(connection => {
+			user.send(`\tConnection-ID: ${connection.id}, Connection-IP: ${connection.ip}`);
+		});
+		user.send("");
+	} else if(command === "users") {
+		user.send("User count: " + webcli.users.length);
+		user.send("Users:");
+		webcli.users.forEach(u => {
+			user.send(`\tUser-ID: ${u.id}, Connection-ID: ${u.connection.id}`);
+		});
+		user.send("");
+	} else if(command === "prompt") { // ToDo
+		//let response = user.prompt("Favorite color?");
+		//user.send(`${response} is a nice color indeed.`);
+	} else if(command === "help") {
+		user.send("List of commands:\n" +
 		"\tsay\n" +
-		"\tconfirm\n");
+		"\tbroadcast\n" +
+		"\tconnections\n" +
+		"\tusers\n");
+	} else {
+		user.send("Invalid command. Try `help`.");
 	}
-	else
-	{
-		webCLI.sendLog("Invalid command. Try `help`.");
-	}
+}
+
+function onLogin(user) {
+	user.send('\thello\n\tbud');
 }

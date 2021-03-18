@@ -1,18 +1,30 @@
 {
   "name": "zd-webcli",
-  "version": "1.1.8",
+  "version": "2.0.0",
   "description": "Web Command-Line Interface for external applications.",
   "main": "web-cli.js",
+  "files": [
+    "/web-cli.js",
+    "/settings.js",
+    "/globals.js",
+    "/classes/",
+    "/client/"
+  ],
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.4.1"
   },
   "devDependencies": {
-    "jshint": "^2.11.0",
-    "nodemon": "^1.19.4"
+    "jsdoc": "^3.6.6",
+    "jsdoc-to-markdown": "^7.0.0",
+    "jshint": "^2.12.0",
+    "nodemon": "^2.0.7"
   },
   "scripts": {
-    "test": "jshint web-cli.js"
+    "test": "nodemon test/test.js",
+    "gendocs": "jsdoc ./web-cli.js ./classes/ -r -d docs",
+    "gendocs-md": "jsdoc2md ./web-cli.js ./classes/* > docs/documentation.md",
+    "jshint": "jshint web-cli.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +36,8 @@
     "terminal",
     "interface",
     "communication",
-    "control"
+    "control",
+	"administration"
   ],
   "author": "M1T0",
   "license": "ISC"
