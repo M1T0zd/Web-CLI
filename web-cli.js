@@ -224,10 +224,10 @@ module.exports = {
 
 	// Data
 	
-	/** Array of all current connections. */
+	/** Array of all current [connections]{@link Connection}. */
 	connections: Connection.connections,
 
-	/** Array of all current users. */
+	/** Array of all current [users]{@link User}.*/
 	users: User.users
 };
 

@@ -215,11 +215,11 @@ Broadcast a message to all current users.
 ## --- Data ---
 
 ### connections
-Array of all current connections.
+Array of all current [connections](#Connection).
 <br>
 
 ### users
-Array of all current users.
+Array of all current [users](#User).
 
 </details>
 
