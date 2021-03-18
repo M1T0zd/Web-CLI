@@ -30,7 +30,7 @@ class Connection { // Mostly a socket.io wrapper class
 		
 		this.on('disconnect', () => { // Socket.io reserved disconnect listener
 			this.disconnect();
-			print(`Connection has been dropped. (Connection-ID: ${this.id})`);
+			print(`Connection has been dropped.`, `Connection-ID: ${this.id}`);
 		});
     }
 
@@ -38,11 +38,11 @@ class Connection { // Mostly a socket.io wrapper class
 		if(!this.#isWhitelisted() || this.#isBlacklisted()) {
 			this.alert({msg:'Connection rejected', type: 'error'});
 			this.disconnect();
-			print(`Connection has been denied. IP: ${this.ip}`)
+			print(`Connection has been denied.`, `IP: ${this.ip}`)
 		} else {
 			Connection.connections.push(this);
 			this.alert({msg:'Connection established', type:'info'});
-			print(`New connection established. Connection-ID: ${this.id} (IP: ${this.ip})`);
+			print(`New connection established.`, `Connection-ID: ${this.id}`, `(IP: ${this.ip})`);
 		}
 	}
 
@@ -53,7 +53,7 @@ class Connection { // Mostly a socket.io wrapper class
 	}
 
 
-	// Socket.io wrapper funcionts
+	// Socket.io wrapper functions
 
 	/** @private */
 	emit(topic, message) {
