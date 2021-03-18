@@ -1,28 +1,30 @@
-webCLI = require("../web-cli.js");
+webcli = require("../web-cli.js");
 
-//Default password: 'admin'
 //Default port: 80
 //Default logStatus: false
 
-webCLI.interpreter(commandHandler);
+webcli.setPassword("secret");
+webcli.onData(commandHandler);
+webcli.start();
 
-webCLI.start();
-
-function commandHandler(command, args)
+function commandHandler(user, data)
 {
+	const args = data.trim().split(/ +/g);
+	const command = args.shift().toLowerCase();
+
 	if(command === "say")
 	{
 		let response = "";
 		args.forEach(arg => {response += arg + " "});
-		if(args) webCLI.sendLog(response); //Send a message back to the client.
+		if(args) user.send(response); //Send a message back to the client.
 	}
 	else if (command === "help")
 	{
-		webCLI.sendLog("List of commands:\n" +
+		user.send("List of commands:\n" +
 		"\tsay\n");
 	}
 	else
 	{
-		webCLI.sendLog("Invalid command. Try `help`.");
+		user.send("Invalid command. Try `help`.");
 	}
 }
