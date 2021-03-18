@@ -85,15 +85,18 @@ class User {
 			}
 			var user = new User(connection);
 			globals.onLogin(user);
-		} else if(connection.attempts >= settings.maxAllowedAttempts) {
-			connection.blocked = true;
-			setTimeout(async function () { delete connection.blocked; }, 180000);
-			connection.alert({ msg:`Too many failed login attempts. Timed out for ${/*settings.timeout*/ 180000/1000/60} minute(s).`, type:'error' });
-				print(`${connection.attempts} failed login attempts made.`, `Connection-ID ${connection.id}`);
-			connection.attempts = 0;
 		} else {
-			connection.alert({ msg:`Password is incorrect`, type:'error' });
 			connection.attempts++;
+
+			if(connection.attempts >= settings.maxAllowedAttempts) {
+				connection.blocked = true;
+				setTimeout(async function () { delete connection.blocked; }, 180000);
+				connection.alert({ msg:`Too many failed login attempts. Timed out for ${/*settings.timeout*/ 180000/1000/60} minute(s).`, type:'error' });
+				print(`${connection.attempts} failed login attempts made.`, `Connection-ID ${connection.id}`);
+				connection.attempts = 0;
+			} else {
+				connection.alert({ msg:`Password is incorrect`, type:'error' });
+			}
 		}
 	}
 
