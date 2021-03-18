@@ -24,20 +24,21 @@ class User {
     constructor(connection) {
         this.#connection = connection;
         this.#id = User.#nextId.toString();
-        User.#nextId++;	
+        User.#nextId++;
 		this.#login(); // User can't exist without being logged in
     }
 
 	#login() {
 		User.users.push(this);
 
-		globals.onLogin(this);
-
 		this.#connection.off("login");
 		this.#connection.on("data", data => globals.onData(this, data));
-		this.#connection.on("logout", () => this.logout());
-		this.#connection.on('disconnect', () => this.logout());
+		let logout = () => { this.logout(); this.#connection.off("disconnect", logout) }; // Temporary(?) error fix
+		this.#connection.on("logout", logout);
+		this.#connection.on('disconnect', logout);
 		this.#connection.join("users");
+
+		globals.onLogin(this);
 
 		this.#connection.alert({ msg: "Authorized", type: "info" });
 		this.#connection.emit("authorized");

@@ -76,8 +76,12 @@ class Connection { // Mostly a socket.io wrapper class
 	}
 
 	/** @private */
-	off(event) {
-		this.#socket.removeAllListeners(event);
+	off(event, listener) {
+		if(listener) {
+			this.#socket.removeListener(event, listener);
+		} else {
+			this.#socket.removeAllListeners(event);
+		}
 	}
 
 	/** @private */
