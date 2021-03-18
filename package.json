@@ -3,6 +3,13 @@
   "version": "1.1.8",
   "description": "Web Command-Line Interface for external applications.",
   "main": "web-cli.js",
+  "files": [
+	"/web-cli.js",
+	"/settings.js",
+	"/globals.js",
+	"/classes/",
+	"/client/"
+  ],
   "dependencies": {
     "express": "^4.16.4",
     "socket.io": "^2.4.1"
