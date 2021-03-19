@@ -1,14 +1,14 @@
 {
   "name": "zd-webcli",
-  "version": "1.1.8",
+  "version": "2.0.0",
   "description": "Web Command-Line Interface for external applications.",
   "main": "web-cli.js",
   "files": [
-	"/web-cli.js",
-	"/settings.js",
-	"/globals.js",
-	"/classes/",
-	"/client/"
+    "/web-cli.js",
+    "/settings.js",
+    "/globals.js",
+    "/classes/",
+    "/client/"
   ],
   "dependencies": {
     "express": "^4.16.4",
@@ -36,7 +36,8 @@
     "terminal",
     "interface",
     "communication",
-    "control"
+    "control",
+	"administration"
   ],
   "author": "M1T0",
   "license": "ISC"
