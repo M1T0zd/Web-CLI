@@ -86,36 +86,36 @@ module.exports = {
 	/**
 	 * Set the the max number of login attempts allowed before receiving a timeout.
 	 * (0=unlimited)
-	 * @param {(number|string)} maxAllowedAttempts - Number of logins attempts allowed.
+	 * @param {(number|string)} maxAttempts - Number of logins attempts allowed.
 	 * @default 3
 	 */
-	setMaxAllowedAttempts(maxAllowedAttempts)
+	setMaxAttempts(maxAttempts)
 	{
-		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
-		else if (!Number.isInteger(Number(maxAllowedAttempts))) { throw new TypeError("Argument must be an integer.") }
+		if(running) { throw new Error("You can't change the max attempts after starting the Web-CLI.") }
+		else if (!Number.isInteger(Number(maxAttempts))) { throw new TypeError("Argument must be an integer.") }
 		
-		if(maxAllowedAttempts == 0) { // 0 = unlimited
-			settings.maxAllowedAttempts = Infinity; 
+		if(maxAttempts == 0) { // 0 = unlimited
+			settings.maxAttempts = Infinity; 
 		} else {
-			settings.maxAllowedAttempts = maxAllowedAttempts;			
+			settings.maxAttempts = maxAttempts;			
 		}
 	},
 
 	/**
 	 * Set the max number of concurrent users allowed.
 	 * (0=unlimited)
-	 * @param {(number|string)} maxAllowedUsers - Number of concurrent users allowed.
+	 * @param {(number|string)} maxUsers - Number of concurrent users allowed.
 	 * @default 1
 	 */
-	setMaxAllowedUsers(maxAllowedUsers)
+	setMaxUsers(maxUsers)
 	{
-		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
-		else if (!Number.isInteger(Number(maxAllowedUsers))) { throw new TypeError("Argument must be an integer.") }
+		if(running) { throw new Error("You can't change the max attempts after starting the Web-CLI.") }
+		else if (!Number.isInteger(Number(maxUsers))) { throw new TypeError("Argument must be an integer.") }
 
-		if(maxAllowedUsers == 0) { // 0 = unlimited
-			settings.maxAllowedUsers = Infinity;
+		if(maxUsers == 0) { // 0 = unlimited
+			settings.maxUsers = Infinity;
 		} else {
-			settings.maxAllowedUsers = maxAllowedUsers;
+			settings.maxUsers = maxUsers;
 		}
 	},
 

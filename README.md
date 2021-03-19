@@ -83,8 +83,8 @@ From the server you can send responses back in any way you desire. <br>
 * Settings
 	* [setPassword(password)*](#setPassword(password))
 	* [setPort(port)](#setPort(port))
-	* [setMaxAllowedAttempts(maxAllowedAttempts)](#setMaxAllowedAttempts(maxAllowedAttempts))
-	* [setMaxAllowedUsers(maxAllowedUsers)](#setMaxAllowedUsers(maxAllowedUsers))
+	* [setMaxAttempts(maxAttempts)](#setMaxAttempts(maxAttempts))
+	* [setMaxUsers(maxUsers)](#setMaxUsers(maxUsers))
 	* [setWhitelist(file)](#setWhitelist(file))
 	* [setBlacklist(file)](#setBlacklist(file))
 	* [setLogStatus(set)](#setLogStatus(set))
@@ -137,22 +137,22 @@ Set the port.
 | port | <code>number</code> \| <code>string</code> | Port to be used. |
 <br>
 
-### setMaxAllowedAttempts(maxAllowedAttempts)
+### setMaxAttempts(maxAttempts)
 Set the the max number of login attempts allowed by a connection before getting a timeout.
 (0=unlimited)  
 **Default**: <code>3</code>  
 | Param | Type | Description |
 | --- | --- | --- |
-| maxAllowedAttempts | <code>number</code> \| <code>string</code> | Number of logins attempts allowed. |
+| maxAttempts | <code>number</code> \| <code>string</code> | Number of logins attempts allowed. |
 <br>
 
-### setMaxAllowedUsers(maxAllowedUsers)
+### setMaxUsers(maxUsers)
 Set the max number of concurrent users allowed.
 (0=unlimited)  
 **Default**: <code>1</code>  
 | Param | Type | Description |
 | --- | --- | --- |
-| maxAllowedUsers | <code>number</code> \| <code>string</code> | Number of concurrent users allowed. |
+| maxUsers | <code>number</code> \| <code>string</code> | Number of concurrent users allowed. |
 <br>
 
 ### setWhitelist(file)
