@@ -4,8 +4,10 @@ webcli.setPassword("secret");
 webcli.setPort("8080");
 webcli.setLogStatus(true);
 webcli.setWhitelist("./whitelist.txt");
-webcli.setMaxAllowedUsers(2);
+webcli.setMaxAttempts(2);
+webcli.setMaxUsers(2);
 webcli.onData(commandHandler);
+webcli.onConnect(onConnect);
 webcli.onLogin(onLogin);
 webcli.start();
 
@@ -51,6 +53,11 @@ function commandHandler(user, data) {
 	}
 }
 
+
+function onConnect(connection) {
+	webcli.broadcast(`New connection from [${connection.ip}]`);
+}
+
 function onLogin(user) {
-	user.send('\thello\n\tbud');
+	user.send('Welcome Back!');
 }

@@ -1,8 +1,10 @@
 module.exports = {
 	// Events
-	onData: function(){}, // Essential!
-	onLogin: function(){},
-	onLogout: function(){},
+	onData(){}, // Essential!
+	onConnect(){},
+	onDisconnect(){},
+	onLogin(){},
+	onLogout(){},
 	
 	print: function(...args) {
 		if(!args) return;

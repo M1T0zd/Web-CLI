@@ -79,7 +79,7 @@ class User {
 		if(connection.blocked) {
 			return;
 		} else if(data === settings.password) {
-			if (User.users.length >= settings.maxAllowedUsers) {
+			if (User.users.length >= settings.maxUsers) {
 				connection.alert({ msg:'Web-CLI is occupied. No access available.', type:'warn' });
 				print(`Web-CLI is occupied. Correct login was blocked.`, `(Connection-ID: ${connection.id})`);
 				return;
@@ -89,7 +89,7 @@ class User {
 		} else {
 			connection.attempts++;
 
-			if(connection.attempts >= settings.maxAllowedAttempts) {
+			if(connection.attempts >= settings.maxAttempts) {
 				connection.blocked = true;
 				setTimeout(async function () { delete connection.blocked; }, 180000);
 				connection.alert({ msg:`Too many failed login attempts. Timed out for ${/*settings.timeout*/ 180000/1000/60} minute(s).`, type:'error' });

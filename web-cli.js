@@ -86,36 +86,36 @@ module.exports = {
 	/**
 	 * Set the the max number of login attempts allowed before receiving a timeout.
 	 * (0=unlimited)
-	 * @param {(number|string)} maxAllowedAttempts - Number of logins attempts allowed.
+	 * @param {(number|string)} maxAttempts - Number of logins attempts allowed.
 	 * @default 3
 	 */
-	setMaxAllowedAttempts(maxAllowedAttempts)
+	setMaxAttempts(maxAttempts)
 	{
-		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
-		else if (!Number.isInteger(Number(maxAllowedAttempts))) { throw new TypeError("Argument must be an integer.") }
+		if(running) { throw new Error("You can't change the max attempts after starting the Web-CLI.") }
+		else if (!Number.isInteger(Number(maxAttempts))) { throw new TypeError("Argument must be an integer.") }
 		
-		if(maxAllowedAttempts == 0) { // 0 = unlimited
-			settings.maxAllowedAttempts = Infinity; 
+		if(maxAttempts == 0) { // 0 = unlimited
+			settings.maxAttempts = Infinity; 
 		} else {
-			settings.maxAllowedAttempts = maxAllowedAttempts;			
+			settings.maxAttempts = maxAttempts;			
 		}
 	},
 
 	/**
 	 * Set the max number of concurrent users allowed.
 	 * (0=unlimited)
-	 * @param {(number|string)} maxAllowedUsers - Number of concurrent users allowed.
+	 * @param {(number|string)} maxUsers - Number of concurrent users allowed.
 	 * @default 1
 	 */
-	setMaxAllowedUsers(maxAllowedUsers)
+	setMaxUsers(maxUsers)
 	{
-		if(running) { throw new Error("You can't change the allowed attempts after starting the Web-CLI.") }
-		else if (!Number.isInteger(Number(maxAllowedUsers))) { throw new TypeError("Argument must be an integer.") }
+		if(running) { throw new Error("You can't change the max attempts after starting the Web-CLI.") }
+		else if (!Number.isInteger(Number(maxUsers))) { throw new TypeError("Argument must be an integer.") }
 
-		if(maxAllowedUsers == 0) { // 0 = unlimited
-			settings.maxAllowedUsers = Infinity;
+		if(maxUsers == 0) { // 0 = unlimited
+			settings.maxUsers = Infinity;
 		} else {
-			settings.maxAllowedUsers = maxAllowedUsers;
+			settings.maxUsers = maxUsers;
 		}
 	},
 
@@ -175,9 +175,9 @@ module.exports = {
 	// Events
 
 	/**
-	 * Set the `onData` event's callback function.
+	 * Set the `onData` event's listener.
 	 * (ESSENTIAL!)
-	 * @param {function(user, data)} cb - Callback function - takes user{{@link User}} and data{string}.
+	 * @param {function(user:User, data:string)} cb - Callback function - takes user{{@link User}} and data{string}.
 	 */
 	onData(cb) // ESSENTIAL!
 	{
@@ -189,7 +189,29 @@ module.exports = {
 	},
 
 	/**
-	 * Set the `onLogin` event's callback function.
+	 * Set the `onConnect` event's listener.
+	 * @param {function(connection:Connection)} cb - Callback function - takes connection{{@link Connection}}.
+	 */
+	onConnect(cb){
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if((typeof cb) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+
+		globals.onConnect = cb;
+	},
+
+	/**
+	 * Set the `onDisconnect` event's listener.
+	 * @param {function(connection:Connection)} cb - Callback function - takes connection{{@link Connection}}.
+	 */
+	onDisconnect(cb){
+		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }
+		else if((typeof cb) !== "function") { throw new TypeError("Argument must be of type: 'function'") }
+
+		globals.onDisconnect = cb;
+	},
+
+	/**
+	 * Set the `onLogin` event's listener.
 	 * @param {function(user:User)} cb - Callback function - takes user{{@link User}}.
 	 */
 	onLogin(cb) {
@@ -200,8 +222,8 @@ module.exports = {
 	},
 
 	/**
-	 * Set the `onLogout` event's callback function.
-	 * @param {function(user)} cb - Callback function - takes user{{@link User}}.
+	 * Set the `onLogout` event's listener.
+	 * @param {function(user:User)} cb - Callback function - takes user{{@link User}}.
 	 */
 	onLogout(cb) {
 		if(running) { throw new Error("You can't set an event after starting the Web-CLI.") }

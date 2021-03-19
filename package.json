@@ -1,6 +1,6 @@
 {
   "name": "zd-webcli",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Web Command-Line Interface for external applications.",
   "main": "web-cli.js",
   "files": [
@@ -37,7 +37,7 @@
     "interface",
     "communication",
     "control",
-	"administration"
+    "administration"
   ],
   "author": "M1T0",
   "license": "ISC"
