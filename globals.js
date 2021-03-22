@@ -6,7 +6,7 @@ module.exports = {
 	onLogin(){},
 	onLogout(){},
 	
-	print: function(...args) {
+	print(...args) {
 		if(!args) return;
 		if(!settings.logStatus) return;
 
